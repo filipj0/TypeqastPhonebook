@@ -1,1 +1,14 @@
-<router-outlet></router-outlet>
+<div [ngClass]="{'mobile': isMobileDevice}">
+    <div id="appHeader">
+        <img class="abs-center" src="../assets/images/typeqast_logo.png">
+        <div class="bottom-rect"></div>
+    </div>
+    <div id="appBody">
+        <div class="menu abs-center-horizontal">
+            <a class="contacts-link" [ngClass]="{'active' : activeOption === 'contacts'}" routerLink="/contacts" (click)="activeOption = 'contacts'">All contacts</a>
+            <span>|</span>
+            <a class="favorites-link" [ngClass]="{'active' : activeOption === 'favorites'}" routerLink="/favorites" (click)="activeOption = 'favorites'">My Favorites</a>
+        </div>
+        <router-outlet></router-outlet>
+    </div>
+</div>

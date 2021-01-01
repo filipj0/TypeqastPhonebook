@@ -1,0 +1,87 @@
+@import "../theme.scss";
+
+#appHeader {
+  position: relative;
+  height: 60px;
+  width: 100%;
+  min-width: 200px;
+  background: linear-gradient(182.65deg, #78C9CE 0%, #2496A2 99.98%, #2496A2 100%);
+
+  img {
+    position: absolute;
+    height: 20px;
+    width: 180px;
+  }
+
+  .bottom-rect {
+    position: absolute;
+    bottom: 0;
+    height: 7px;
+    width: 100%;
+    opacity: 0.3;
+    transform: scaleY(-1);
+    background-color: white;
+  }
+}
+
+#appBody {
+  position: absolute;
+  top: 60px;
+  width: 100%;
+
+  .menu {
+    height: 120px;
+    width: 87.5%;
+    min-width: 300px;
+    border-bottom: $teal-prime solid 1px;
+    line-height: 120px;
+    text-align: center;
+
+    a {
+      color: $grey-prime;
+      font-size: $fontRegular;
+      text-decoration: none;
+
+      &.active {
+        color: $teal-prime;
+      }
+
+      &.contacts-link {
+        margin-right: 30px;
+      }
+
+      &.favorites-link {
+        margin-left: 30px;
+      }
+    }
+
+    span {
+      color: $grey-prime;
+    }
+  }
+}
+
+.mobile {
+  #appHeader {
+    height: 50px;
+
+    img {
+      height: 16.67px;
+      width: 150px;
+    }
+  }
+
+  #appBody{
+    top: 50px;
+
+    .menu {
+      height: 50px;
+      width: 85.3%;
+      line-height: 50px;
+
+      a {
+        font-size: $fontMobileRegular;
+      }
+    }
+  }
+}
