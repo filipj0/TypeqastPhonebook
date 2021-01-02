@@ -1,9 +1,10 @@
 @import "src/theme.scss";
 
 // Colors
-$tileBorder: rgba(187,196,195,0.4);
+$tileBorder: rgba(187, 196, 195, 0.4);
+$tileImageBorder: rgba(187, 196, 195, 0.3);
 
-#contactListArea{
+#contactListArea {
   position: absolute;
   width: 100%;
   top: 120px;
@@ -12,7 +13,7 @@ $tileBorder: rgba(187,196,195,0.4);
     height: 180px;
     width: 100%;
 
-    .inner{
+    .inner {
       height: 60px;
       width: 540px;
 
@@ -30,12 +31,12 @@ $tileBorder: rgba(187,196,195,0.4);
         color: $grey-prime;
         outline: none;
 
-        &:focus{
+        &:focus {
           border-color: $teal-prime;
         }
       }
 
-      img{
+      img {
         z-index: 1;
         height: 18px;
         width: 17px;
@@ -44,7 +45,7 @@ $tileBorder: rgba(187,196,195,0.4);
     }
   }
 
-  #contactList{
+  #contactList {
     position: absolute;
     left: 137px;
 
@@ -55,17 +56,20 @@ $tileBorder: rgba(187,196,195,0.4);
       border: 1px solid $tileBorder;
       border-radius: 4px;
       cursor: pointer;
+      float: left;
+      margin-right: 30px;
+      margin-bottom: 30px;
 
-      &:hover{
+      &:hover {
         border-color: $teal-prime;
         border-style: solid !important;
       }
 
-      &#newContact{
+      &#newContact {
         border-color: $teal-prime;
         border-style: dashed;
 
-        .inner{
+        .inner {
           height: 50px;
           width: 70px;
 
@@ -79,13 +83,88 @@ $tileBorder: rgba(187,196,195,0.4);
             width: 100%;
           }
 
-          img{
+          img {
             height: 18px;
             width: 18px;
             top: 0;
           }
         }
       }
+
+      .tile-header {
+        position: absolute;
+        top: 0;
+        left: 17px;
+        right: 17px;
+
+        .tile-header-icon {
+          margin-top: 15px;
+          float: right;
+
+          &.fav-icon {
+            float: left;
+          }
+
+          &.edit-icon {
+            margin-right: 26px;
+          }
+        }
+      }
     }
+
+    .profile {
+      height: 100px;
+      width: 100%;
+
+      .profile-pic {
+        width: 66px;
+        height: 66px;
+        border: 3px solid $tileImageBorder;
+        border-radius: 50%;
+        overflow: hidden;
+        background-color: $tileImageBorder;
+
+        img {
+          position: absolute;
+          left: 50%;
+          transform: translateX(-50%);
+          height: auto;
+          width: auto;
+          opacity: 0;
+          transition: opacity 200ms;
+
+          &.horizontal-align {
+            height: 100%;
+          }
+
+          &.vertical-align {
+            width: 100%;
+          }
+
+          &.loaded {
+            opacity: 1;
+          }
+        }
+      }
+
+      .profile-name{
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        text-align: center;
+        color: $grey-prime;
+        font-size: $fontRegular;
+      }
+    }
+  }
+}
+
+:host ::ng-deep .tile svg {
+  fill: $grey-prime;
+  width: 15px;
+  height: 15px;
+
+  &:hover {
+    fill: $teal-prime;
   }
 }

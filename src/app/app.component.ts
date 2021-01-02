@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { ViewStateService } from './services/view-state.service';
 import { Router } from '@angular/router';
+import { SvgService } from './services/svg.service';
 
 @Component({
     selector: 'app-root',
@@ -11,7 +12,7 @@ export class AppComponent implements OnInit {
     public isMobileDevice: boolean = false;
     public activeOption: string;
 
-    constructor(private viewStateService: ViewStateService, private router: Router) {
+    constructor(@Inject(SvgService)public svgService: SvgService, private viewStateService: ViewStateService, private router: Router) {
         this.isMobileDevice = this.viewStateService.checkIfMobileResolution();
     }
 

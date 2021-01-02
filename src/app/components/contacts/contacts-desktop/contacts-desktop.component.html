@@ -13,5 +13,25 @@
                 <div class="text abs-center-horizontal">Add new</div>
             </div>
         </div>
+        <div *ngFor="let contact of contacts" class="tile">
+            <div class="tile-header">
+                <div class="tile-header-icon fav-icon">
+                    <div *ngIf="!contact.favorite" class="off"
+                         [innerHTML]="svgService.getSvg(svgService.svgKeys.FAV_ICON)"></div>
+                    <div *ngIf="contact.favorite" class="on"
+                         [innerHTML]="svgService.getSvg(svgService.svgKeys.FAV_FULL_ICON)"></div>
+                </div>
+                <div class="tile-header-icon delete-icon"
+                     [innerHTML]="svgService.getSvg(svgService.svgKeys.DELETE_ICON)"></div>
+                <div class="tile-header-icon edit-icon"
+                     [innerHTML]="svgService.getSvg(svgService.svgKeys.EDIT_ICON)"></div>
+            </div>
+            <div class="profile abs-center">
+                <div class="profile-pic abs-center-horizontal">
+                    <img imgLoad [imageUrl]="contact.imageUrl">
+                </div>
+                <div class="profile-name abs-center-horizontal">{{contact.firstName}} {{contact.lastName}}</div>
+            </div>
+        </div>
     </div>
 </div>

@@ -3,7 +3,7 @@
         <img class="abs-center" src="../assets/images/typeqast_logo.png">
         <div class="bottom-rect"></div>
     </div>
-    <div id="appBody">
+    <div *ngIf="svgService.svgsLoaded" id="appBody">
         <div class="menu abs-center-horizontal">
             <a class="contacts-link" [ngClass]="{'active' : activeOption === 'contacts'}" routerLink="/contacts" (click)="activeOption = 'contacts'">All contacts</a>
             <span>|</span>

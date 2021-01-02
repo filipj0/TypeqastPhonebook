@@ -5,8 +5,14 @@ import { ContactsComponent } from './components/contacts/contacts.component';
 
 const routes: Routes = [
     { path: '', redirectTo: '/contacts', pathMatch: 'full' },
-    { path: 'contacts', component: ContactsComponent },
-    { path: 'favorites', component: ContactsComponent },
+    {
+        path: 'contacts',
+        component: ContactsComponent
+    },
+    {
+        path: 'favorites',
+        component: ContactsComponent
+    },
     { path: '**', redirectTo: '' }
 ];
 

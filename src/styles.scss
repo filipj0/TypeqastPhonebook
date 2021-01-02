@@ -1,3 +1,5 @@
+@import "theme.scss";
+
 @font-face {
   font-family: 'Lato Regular';
   src: url("./assets/fonts/Lato-Regular.ttf") format('truetype');
@@ -8,8 +10,8 @@
   src: url("./assets/fonts/Lato-Bold.ttf") format('truetype');
 }
 
-
-.html, body{
+// html, body rules
+.html, body {
   width: 100%;
   height: 100%;
   margin: 0;
@@ -17,7 +19,8 @@
   font-family: 'Lato Bold', sans-serif;
 }
 
-.abs-center{
+// Global classes
+.abs-center {
   position: absolute;
   margin: auto;
   top: 0;
@@ -26,16 +29,32 @@
   right: 0;
 }
 
-.abs-center-horizontal{
+.abs-center-horizontal {
   position: absolute;
   margin: auto;
   left: 0;
   right: 0;
 }
 
-.abs-center-vertical{
+.abs-center-vertical {
   position: absolute;
   margin: auto;
   top: 0;
   bottom: 0;
 }
+
+// SVG rules
+/*#contactList {
+  .tile svg {
+    fill: $grey-prime;
+    width: 15px;
+    height: 15px;
+
+    &:hover {
+      fill: $teal-prime;
+    }
+  }
+}*/
+
+
+
