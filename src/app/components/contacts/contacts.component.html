@@ -1,1 +1,3 @@
-<p>{{testMsg}}</p>
+<app-contacts-desktop *ngIf="!isMobileDevice"></app-contacts-desktop>
+
+<app-contacts-mobile *ngIf="isMobileDevice"></app-contacts-mobile>

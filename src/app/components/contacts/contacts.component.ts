@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ContactsComponentModel } from './contacts.component.model';
 import { Router } from '@angular/router';
+import { ViewStateService } from '../../services/view-state.service';
 
 @Component({
     selector: 'app-contacts',
@@ -9,12 +10,12 @@ import { Router } from '@angular/router';
 export class ContactsComponent {
     private model: ContactsComponentModel;
     public activeViewModel: ContactsComponentModel;
-    testMsg: any;
+    public isMobileDevice: boolean = false;
 
-    constructor(private router: Router) {
+    constructor(private router: Router, private viewStateService: ViewStateService) {
         this.model = new ContactsComponentModel();
         this.activeViewModel = new ContactsComponentModel();
-        this.testMsg = this.router.url === '/contacts' ? 'Contacts' : 'Favorites';
+        this.isMobileDevice = this.viewStateService.checkIfMobileResolution();
     }
 }
 

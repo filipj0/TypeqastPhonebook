@@ -1,0 +1,91 @@
+@import "src/theme.scss";
+
+// Colors
+$tileBorder: rgba(187,196,195,0.4);
+
+#contactListArea{
+  position: absolute;
+  width: 100%;
+  top: 120px;
+
+  #searchBar {
+    height: 180px;
+    width: 100%;
+
+    .inner{
+      height: 60px;
+      width: 540px;
+
+      input {
+        height: 100%;
+        width: 100%;
+        box-sizing: border-box;
+        border: 1px solid $grey-light;
+        border-radius: 4px;
+        background-color: white;
+        box-shadow: 0 2px 34px 0 $grey-shadow;
+        padding-left: 63px;
+        padding-right: 15px;
+        font-size: $fontRegular;
+        color: $grey-prime;
+        outline: none;
+
+        &:focus{
+          border-color: $teal-prime;
+        }
+      }
+
+      img{
+        z-index: 1;
+        height: 18px;
+        width: 17px;
+        left: 23px;
+      }
+    }
+  }
+
+  #contactList{
+    position: absolute;
+    left: 137px;
+
+    .tile {
+      position: relative;
+      width: 270px;
+      height: 150px;
+      border: 1px solid $tileBorder;
+      border-radius: 4px;
+      cursor: pointer;
+
+      &:hover{
+        border-color: $teal-prime;
+        border-style: solid !important;
+      }
+
+      &#newContact{
+        border-color: $teal-prime;
+        border-style: dashed;
+
+        .inner{
+          height: 50px;
+          width: 70px;
+
+          .text {
+            font-family: 'Lato Regular', sans-serif;
+            font-size: $fontSmall;
+            text-align: center;
+            color: $teal-prime;
+            opacity: 0.5;
+            bottom: 0;
+            width: 100%;
+          }
+
+          img{
+            height: 18px;
+            width: 18px;
+            top: 0;
+          }
+        }
+      }
+    }
+  }
+}
