@@ -7,13 +7,13 @@
     </div>
 
     <div id="contactList">
-        <div id="newContact" class="tile">
+        <div id="newContact" class="tile" (click)="addNewContact()">
             <div class="inner abs-center">
                 <img class="abs-center-horizontal" src="../assets/images/add_icon.png">
                 <div class="text abs-center-horizontal">Add new</div>
             </div>
         </div>
-        <div *ngFor="let contact of contacts" class="tile">
+        <div *ngFor="let contact of contacts" class="tile" (click)="showContactDetails(contact)">
             <div class="tile-header">
                 <div class="tile-header-icon fav-icon">
                     <div *ngIf="!contact.favorite" class="off"
@@ -27,7 +27,7 @@
                      [innerHTML]="svgService.getSvg(svgService.svgKeys.EDIT_ICON)"></div>
             </div>
             <div class="profile abs-center">
-                <div class="profile-pic abs-center-horizontal">
+                <div class="profile-pic-wrapper abs-center-horizontal">
                     <img imgLoad [imageUrl]="contact.imageUrl">
                 </div>
                 <div class="profile-name abs-center-horizontal">{{contact.firstName}} {{contact.lastName}}</div>
@@ -35,3 +35,6 @@
         </div>
     </div>
 </div>
+
+<app-contact-details-desktop *ngIf="showDetailsView" [contact]="contactForDetails" [mode]="detailsMode"
+                     [isMobileDevice]="isMobileDevice" (closeDetailsEmitter)="closeContactDetails()"></app-contact-details-desktop>

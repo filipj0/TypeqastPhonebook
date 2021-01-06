@@ -10,6 +10,9 @@ import { ContactDetailsComponent } from './components/contact-details/contact-de
 import { SvgService } from './services/svg.service';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ImageLoadDirective } from './directives/img-load.directive';
+import { ContactDetailsDesktopComponent } from './components/contact-details/contact-details-desktop/contact-details-desktop.component';
+import { ContactDetailsMobileComponent } from './components/contact-details/contact-details-mobile/contact-details-mobile.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
     declarations: [
@@ -18,12 +21,15 @@ import { ImageLoadDirective } from './directives/img-load.directive';
         ContactsDesktopComponent,
         ContactsMobileComponent,
         ContactDetailsComponent,
-        ImageLoadDirective
+        ImageLoadDirective,
+        ContactDetailsDesktopComponent,
+        ContactDetailsMobileComponent
     ],
     imports: [
         BrowserModule,
         AppRoutingModule,
-        HttpClientModule
+        HttpClientModule,
+        ReactiveFormsModule
     ],
     providers: [
         HttpClient,

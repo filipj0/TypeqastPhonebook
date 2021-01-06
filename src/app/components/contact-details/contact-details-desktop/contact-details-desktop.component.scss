@@ -1,0 +1,114 @@
+@import "src/theme.scss";
+
+#contactDetailsArea {
+  position: absolute;
+  background-color: white;
+  min-height: 100%;
+  width: 100%;
+  z-index: 1;
+
+  .inner {
+    width: 855px;
+    margin-top: 57px;
+
+    .profile-pic-wrapper {
+      float: left;
+      width: 186px;
+      height: 186px;
+    }
+
+    #contactDetails {
+      position: relative;
+      float: right;
+      width: 630px;
+
+      .header {
+        position: relative;
+        height: 94px;
+        width: 100%;
+        border-bottom: 1px solid $tealPrime;
+
+        .header-icon {
+          position: relative;
+          width: 15px;
+          height: 15px;
+          float: right;
+          top: 50%;
+          transform: translateY(-50%);
+
+          &.back-btn {
+            width: 21px;
+            height: 16px;
+            float: left;
+            margin-left: 5px;
+          }
+
+          &.fav-icon {
+            margin-right: 45px;
+          }
+        }
+
+        .header-name {
+          position: absolute;
+          left: 45px;
+          right: 85px;
+          height: 100%;
+          line-height: 94px;
+          color: $greyPrime;
+          font-size: $fontLarge;
+        }
+      }
+
+      table.content-data-table {
+        width: 80%;
+        margin-top: 60px;
+
+        tr {
+          vertical-align: top;
+
+          td {
+            position: relative;
+            width: 1%;
+            padding-bottom: 70px;
+            font-size: $fontSmall;
+
+            &.contact-data {
+              color: $greyPrime;
+
+              &.phone-data {
+                div {
+                  display: grid;
+                  grid-template-columns: auto auto;
+
+                  div {
+                    display: inline-grid;
+                  }
+                }
+              }
+            }
+
+
+            .label-with-icon {
+              width: 100%;
+              height: 100%;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.label-with-icon {
+  position: absolute;
+  color: $tealPrime;
+
+  img {
+    width: 15px;
+    height: auto;
+  }
+
+  label {
+    margin-left: 30px;
+  }
+}

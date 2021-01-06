@@ -1,23 +1,44 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { ContactsComponent } from './components/contacts/contacts.component';
+import { Routes, RouterModule, Router } from '@angular/router';
+import { ContactsDesktopComponent } from './components/contacts/contacts-desktop/contacts-desktop.component';
+import { ContactsMobileComponent } from './components/contacts/contacts-mobile/contacts-mobile.component';
+import { ViewStateService } from './services/view-state.service';
 
 
-const routes: Routes = [
+const routesDesktop: Routes = [
     { path: '', redirectTo: '/contacts', pathMatch: 'full' },
     {
         path: 'contacts',
-        component: ContactsComponent
+        component: ContactsDesktopComponent
     },
     {
         path: 'favorites',
-        component: ContactsComponent
+        component: ContactsDesktopComponent
+    },
+    { path: '**', redirectTo: '' }
+];
+
+const routesMobile: Routes = [
+    { path: '', redirectTo: '/contacts', pathMatch: 'full' },
+    {
+        path: 'contacts',
+        component: ContactsMobileComponent
+    },
+    {
+        path: 'favorites',
+        component: ContactsMobileComponent
     },
     { path: '**', redirectTo: '' }
 ];
 
 @NgModule({
-    imports: [RouterModule.forRoot(routes)],
+    imports: [RouterModule.forRoot(routesDesktop)],
     exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule {
+    constructor(private router: Router, private viewStateService: ViewStateService) {
+        if (this.viewStateService.checkIfMobileResolution()) {
+            router.resetConfig(routesMobile);
+        }
+    }
+}

@@ -1,0 +1,50 @@
+<div id="contactDetailsArea">
+    <div class="inner abs-center-horizontal">
+        <div class="profile-pic-wrapper">
+            <img imgLoad [imageUrl]="contact.imageUrl">
+        </div>
+        <div id="contactDetails">
+            <div class="header">
+                <div class="header-icon back-btn" [innerHTML]="svgService.getSvg(svgService.svgKeys.BACK_ICON)"
+                     (click)="closeDetailsEmitter.emit()"></div>
+                <div *ngIf="mode === globalService.detailsModes.READONLY"
+                     class="header-name">{{contact.firstName}} {{contact.lastName}}</div>
+                <div class="header-icon" [innerHTML]="svgService.getSvg(svgService.svgKeys.EDIT_ICON)"></div>
+                <div *ngIf="!contact.favorite" class="header-icon fav-icon"
+                     [innerHTML]="svgService.getSvg(svgService.svgKeys.FAV_ICON)"></div>
+                <div *ngIf="contact.favorite" class="header-icon fav-icon"
+                     [innerHTML]="svgService.getSvg(svgService.svgKeys.FAV_FULL_ICON)"></div>
+            </div>
+            <table class="abs-center-horizontal content-data-table" *ngIf="mode === globalService.detailsModes.READONLY">
+                <tr>
+                    <td>
+                        <div class="label-with-icon">
+                            <img class="icon" src="./assets/images/mail_icon.png">
+                            <label>email</label>
+                        </div>
+                    </td>
+                    <td class="contact-data">{{contact.email}}</td>
+                </tr>
+                <tr>
+                    <td class="label-with-icon">
+                        <img class="icon" src="./assets/images/phone_icon.png">
+                        <label>numbers</label>
+                    </td>
+                    <td class="contact-data phone-data">
+                      <!--  <div *ngFor="let phoneNumber of contact.phoneNumbers">
+                            <div class="phone-type">{{phoneNumber.type}}</div>
+                            <div class="phone-number">{{phoneNumber.number}}</div>
+                            <br><br>
+                        </div>-->
+                        <table>
+                            <tr *ngFor="let phoneNumber of contact.phoneNumbers">
+                                <td>{{phoneNumber.type}}</td>
+                                <td>{{phoneNumber.number}}</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>

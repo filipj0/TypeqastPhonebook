@@ -1,9 +1,5 @@
 @import "src/theme.scss";
 
-// Colors
-$tileBorder: rgba(187, 196, 195, 0.4);
-$tileImageBorder: rgba(187, 196, 195, 0.3);
-
 #contactListArea {
   position: absolute;
   width: 100%;
@@ -21,18 +17,18 @@ $tileImageBorder: rgba(187, 196, 195, 0.3);
         height: 100%;
         width: 100%;
         box-sizing: border-box;
-        border: 1px solid $grey-light;
+        border: 1px solid $greyLight;
         border-radius: 4px;
         background-color: white;
-        box-shadow: 0 2px 34px 0 $grey-shadow;
+        box-shadow: 0 2px 34px 0 $greyShadow;
         padding-left: 63px;
         padding-right: 15px;
         font-size: $fontRegular;
-        color: $grey-prime;
+        color: $greyPrime;
         outline: none;
 
         &:focus {
-          border-color: $teal-prime;
+          border-color: $tealPrime;
         }
       }
 
@@ -53,7 +49,7 @@ $tileImageBorder: rgba(187, 196, 195, 0.3);
       position: relative;
       width: 270px;
       height: 150px;
-      border: 1px solid $tileBorder;
+      border: $tileBorderPrime;
       border-radius: 4px;
       cursor: pointer;
       float: left;
@@ -61,12 +57,12 @@ $tileImageBorder: rgba(187, 196, 195, 0.3);
       margin-bottom: 30px;
 
       &:hover {
-        border-color: $teal-prime;
+        border-color: $tealPrime;
         border-style: solid !important;
       }
 
       &#newContact {
-        border-color: $teal-prime;
+        border-color: $tealPrime;
         border-style: dashed;
 
         .inner {
@@ -77,7 +73,7 @@ $tileImageBorder: rgba(187, 196, 195, 0.3);
             font-family: 'Lato Regular', sans-serif;
             font-size: $fontSmall;
             text-align: center;
-            color: $teal-prime;
+            color: $tealPrime;
             opacity: 0.5;
             bottom: 0;
             width: 100%;
@@ -98,7 +94,10 @@ $tileImageBorder: rgba(187, 196, 195, 0.3);
         right: 17px;
 
         .tile-header-icon {
+          position: relative;
           margin-top: 15px;
+          height: 15px;
+          width: 15px;
           float: right;
 
           &.fav-icon {
@@ -116,35 +115,9 @@ $tileImageBorder: rgba(187, 196, 195, 0.3);
       height: 100px;
       width: 100%;
 
-      .profile-pic {
+      .profile-pic-wrapper {
         width: 66px;
         height: 66px;
-        border: 3px solid $tileImageBorder;
-        border-radius: 50%;
-        overflow: hidden;
-        background-color: $tileImageBorder;
-
-        img {
-          position: absolute;
-          left: 50%;
-          transform: translateX(-50%);
-          height: auto;
-          width: auto;
-          opacity: 0;
-          transition: opacity 200ms;
-
-          &.horizontal-align {
-            height: 100%;
-          }
-
-          &.vertical-align {
-            width: 100%;
-          }
-
-          &.loaded {
-            opacity: 1;
-          }
-        }
       }
 
       .profile-name{
@@ -152,19 +125,9 @@ $tileImageBorder: rgba(187, 196, 195, 0.3);
         bottom: 0;
         width: 100%;
         text-align: center;
-        color: $grey-prime;
+        color: $greyPrime;
         font-size: $fontRegular;
       }
     }
-  }
-}
-
-:host ::ng-deep .tile svg {
-  fill: $grey-prime;
-  width: 15px;
-  height: 15px;
-
-  &:hover {
-    fill: $teal-prime;
   }
 }

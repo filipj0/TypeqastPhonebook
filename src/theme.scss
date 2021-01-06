@@ -1,11 +1,16 @@
 // Colors:
-$teal-prime: #2DA1AD;
-$grey-prime: #BBC4C3;
-$grey-light: #EAEAEA;
-$grey-shadow: #E3E3E3;
+$tealPrime: #2DA1AD;
+$greyPrime: #BBC4C3;
+$greyLight: #EAEAEA;
+$greyShadow: #E3E3E3;
+$tileImageBackground: rgba(187, 196, 195, 0.3);
 
 // Font-sizes:
 $fontSmall: 16px;
 $fontRegular: 18px;
-
+$fontLarge: 28px;
 $fontMobileRegular: 14px;
+
+// Borders
+$tileBorderPrime: 1px solid rgba(187, 196, 195, 0.4);
+$tileImageBorder: 3px solid rgba(187, 196, 195, 0.3);

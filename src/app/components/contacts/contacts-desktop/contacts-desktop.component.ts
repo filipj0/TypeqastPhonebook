@@ -1,8 +1,9 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
-import { ContactsComponent } from '../contacts.component';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Contact, ContactsComponent } from '../contacts.component';
 import { Router } from '@angular/router';
 import { ViewStateService } from '../../../services/view-state.service';
 import { SvgService } from '../../../services/svg.service';
+import { GlobalService } from '../../../services/global.service';
 
 @Component({
     selector: 'app-contacts-desktop',
@@ -10,7 +11,7 @@ import { SvgService } from '../../../services/svg.service';
     styleUrls: ['./contacts-desktop.component.scss']
 })
 export class ContactsDesktopComponent extends ContactsComponent {
-    constructor(svgService: SvgService, router: Router, viewStateService: ViewStateService, cd: ChangeDetectorRef) {
-        super(svgService, router, viewStateService, cd);
+    constructor(svgService: SvgService, globalService: GlobalService, router: Router, viewStateService: ViewStateService, cd: ChangeDetectorRef) {
+        super(svgService, globalService, router, viewStateService, cd);
     }
 }

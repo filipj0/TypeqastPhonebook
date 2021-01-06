@@ -15,11 +15,11 @@
   width: 100%;
   height: 100%;
   margin: 0;
-  overflow: scroll;
+  overflow: auto;
   font-family: 'Lato Bold', sans-serif;
 }
 
-// Global classes
+// Global general classes
 .abs-center {
   position: absolute;
   margin: auto;
@@ -43,18 +43,55 @@
   bottom: 0;
 }
 
-// SVG rules
-/*#contactList {
-  .tile svg {
-    fill: $grey-prime;
-    width: 15px;
-    height: 15px;
+// Global specific classes
+.profile-pic-wrapper {
+  position: absolute;
+  border: $tileImageBorder;
+  border-radius: 50%;
+  overflow: hidden;
+  background-color: $tileImageBackground;
 
-    &:hover {
-      fill: $teal-prime;
+  img {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    height: auto;
+    width: auto;
+    opacity: 0;
+    transition: opacity 200ms;
+
+    &.horizontal-align {
+      height: 100%;
+    }
+
+    &.vertical-align {
+      width: 100%;
+    }
+
+    &.loaded {
+      opacity: 1;
     }
   }
-}*/
+}
+
+// SVG rules
+.tile-header-icon svg, .header-icon svg {
+  position: absolute;
+  margin: auto;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  fill: $greyPrime;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+
+  &:hover {
+    fill: $tealPrime;
+  }
+}
 
 
 

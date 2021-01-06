@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
-import { ContactsComponentModel } from './contacts.component.model';
 import { Router } from '@angular/router';
 import { ViewStateService } from '../../services/view-state.service';
 import { SvgService } from '../../services/svg.service';
+import { GlobalService } from '../../services/global.service';
 
 @Component({
     selector: 'app-contacts',
@@ -10,27 +10,27 @@ import { SvgService } from '../../services/svg.service';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ContactsComponent implements OnInit {
-    private model: ContactsComponentModel;
     public isMobileDevice: boolean = false;
-    public showContactDetails: boolean = false;
+    public showDetailsView: boolean = false;
     public detailsMode: string = null;
-    public detailsModes = {
-        READONLY: 'READONLY',
-        EDIT: 'EDIT',
-        NEW: 'NEW'
-    };
     public contacts: Array<Contact> = [];
+    public contactForDetails: Contact = null;
 
     constructor(@Inject(SvgService) public svgService: SvgService,
+                @Inject(GlobalService) public globalService: GlobalService,
                 private router: Router,
                 private viewStateService: ViewStateService,
                 private cd: ChangeDetectorRef) {
-        this.model = new ContactsComponentModel();
         this.isMobileDevice = this.viewStateService.checkIfMobileResolution();
     }
 
     ngOnInit(): void {
-        this.loadContacts();
+        if (this.router.url === '/contacts') {
+            this.loadContacts();
+        }
+        else {
+            this.loadFavorites();
+        }
     }
 
     private detectChanges() {
@@ -48,11 +48,35 @@ export class ContactsComponent implements OnInit {
         let contact3 = new Contact(2, 'Jon', 'Huber', 'jonhuber@gmail.com', phoneNumbers, 'https://akns-images.eonline.com/eol_images/Entire_Site/20201127/rs_1024x759-201227091535-1024-Luke-Harper-Brodie-Lee.cm.122720.jpg');
         this.contacts = [contact1, contact2, contact3];
         this.detectChanges();
+        this.showContactDetails(null);
     }
 
-    newContactClick() {
-        this.detailsMode = this.detailsModes.NEW;
-        this.showContactDetails = true;
+    private loadFavorites() {
+        this.contacts = [];
+        let phoneNumbers = [new PhoneNumber('555-1234', 'HOME'), new PhoneNumber('555-5678', 'WORK')];
+        let contact2 = new Contact(1, 'Luke', 'Harper', 'lukeharper@wwe.com', phoneNumbers, 'https://upload.wikimedia.org/wikipedia/commons/f/fc/Luke_Harper_April_2015.jpg');
+        contact2.favorite = true;
+        this.contacts = [contact2];
+        this.detectChanges();
+    }
+
+    addNewContact() {
+        this.detailsMode = this.globalService.detailsModes.NEW;
+        this.showDetailsView = true;
+        this.detectChanges();
+    }
+
+    showContactDetails(contact: Contact) {
+        this.contactForDetails = contact;
+        let phoneNumbers = [new PhoneNumber('555-1234', 'HOME'), new PhoneNumber('555-5678', 'WORK')];
+        this.contactForDetails = new Contact(1, 'Luke', 'Harper', 'lukeharper@wwe.com', phoneNumbers, 'https://upload.wikimedia.org/wikipedia/commons/f/fc/Luke_Harper_April_2015.jpg');
+        this.detailsMode = this.globalService.detailsModes.READONLY;
+        this.showDetailsView = true;
+        this.detectChanges();
+    }
+
+    closeContactDetails() {
+        this.showDetailsView = false;
         this.detectChanges();
     }
 }

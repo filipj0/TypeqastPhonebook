@@ -1,1 +1,3 @@
-<p>contact-details works!</p>
+<app-contact-details-desktop *ngIf="!isMobileDevice"></app-contact-details-desktop>
+
+<app-contact-details-mobile *ngIf="isMobileDevice"></app-contact-details-mobile>

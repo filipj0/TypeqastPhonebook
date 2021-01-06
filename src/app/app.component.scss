@@ -27,23 +27,24 @@
 #appBody {
   position: absolute;
   top: 60px;
+  bottom: 0;
   width: 100%;
 
   .menu {
     height: 120px;
     width: 87.5%;
     min-width: 300px;
-    border-bottom: $teal-prime solid 1px;
+    border-bottom: $tealPrime solid 1px;
     line-height: 120px;
     text-align: center;
 
     a {
-      color: $grey-prime;
+      color: $greyPrime;
       font-size: $fontRegular;
       text-decoration: none;
 
       &.active {
-        color: $teal-prime;
+        color: $tealPrime;
       }
 
       &.contacts-link {
@@ -56,7 +57,7 @@
     }
 
     span {
-      color: $grey-prime;
+      color: $greyPrime;
     }
   }
 }

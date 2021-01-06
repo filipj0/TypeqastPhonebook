@@ -9,10 +9,13 @@ export class SvgService {
     public svgsLoaded: boolean = false;
     public svgs: any = {};
     public svgKeys: any = {
+        BACK_ICON: 'back_icon',
+        DELETE_ICON: 'delete_icon',
+        EDIT_ICON: 'edit_icon',
         FAV_ICON: 'fav_icon',
         FAV_FULL_ICON: 'fav_full_icon',
-        EDIT_ICON: 'edit_icon',
-        DELETE_ICON: 'delete_icon'
+        MAIL_ICON: 'mail_icon',
+        PHONE_ICON: 'phone_icon'
     };
 
     constructor(private http: HttpClient, private domSanitizer: DomSanitizer) {
@@ -41,7 +44,6 @@ export class SvgService {
     }
 
     public getSvg(key: string) {
-        console.log('get svg', key);
         return this.svgs[key];
     }
 }
