@@ -41,22 +41,22 @@ export class ContactsComponent implements OnInit {
 
     private loadContacts() {
         this.contacts = [];
-        let phoneNumbers = [new PhoneNumber('555-1234', 'HOME'), new PhoneNumber('555-5678', 'WORK')];
-        let contact1 = new Contact(0, 'Brodie', 'Lee', 'brodielee@aew.com', phoneNumbers, 'https://site-cdn.givemesport.com/images/20/12/27/c5ea07fab6cc850d07e6c53d02e2d8e7/1201.jpg');
-        let contact2 = new Contact(1, 'Luke', 'Harper', 'lukeharper@wwe.com', phoneNumbers, 'https://upload.wikimedia.org/wikipedia/commons/f/fc/Luke_Harper_April_2015.jpg');
+       /* let phoneNumbers = [new PhoneNumber('555-1234', 'HOME'), new PhoneNumber('555-5678', 'WORK')];
+        let contact1 = new Contact(0, 'Brodie Lee', 'brodielee@aew.com', phoneNumbers, 'https://site-cdn.givemesport.com/images/20/12/27/c5ea07fab6cc850d07e6c53d02e2d8e7/1201.jpg');
+        let contact2 = new Contact(1, 'Luke Harper', 'lukeharper@wwe.com', phoneNumbers, 'https://upload.wikimedia.org/wikipedia/commons/f/fc/Luke_Harper_April_2015.jpg');
         contact2.favorite = true;
-        let contact3 = new Contact(2, 'Jon', 'Huber', 'jonhuber@gmail.com', phoneNumbers, 'https://akns-images.eonline.com/eol_images/Entire_Site/20201127/rs_1024x759-201227091535-1024-Luke-Harper-Brodie-Lee.cm.122720.jpg');
-        this.contacts = [contact1, contact2, contact3];
+        let contact3 = new Contact(2, 'Jon Huber', 'jonhuber@gmail.com', phoneNumbers, 'https://akns-images.eonline.com/eol_images/Entire_Site/20201127/rs_1024x759-201227091535-1024-Luke-Harper-Brodie-Lee.cm.122720.jpg');
+        this.contacts = [contact1, contact2, contact3];*/
         this.detectChanges();
-        this.showContactDetails(null);
+        this.addNewContact();
     }
 
     private loadFavorites() {
         this.contacts = [];
-        let phoneNumbers = [new PhoneNumber('555-1234', 'HOME'), new PhoneNumber('555-5678', 'WORK')];
-        let contact2 = new Contact(1, 'Luke', 'Harper', 'lukeharper@wwe.com', phoneNumbers, 'https://upload.wikimedia.org/wikipedia/commons/f/fc/Luke_Harper_April_2015.jpg');
+        /*let phoneNumbers = [new PhoneNumber('555-1234', 'HOME'), new PhoneNumber('555-5678', 'WORK')];
+        let contact2 = new Contact(1, 'Luke Harper', 'lukeharper@wwe.com', phoneNumbers, 'https://upload.wikimedia.org/wikipedia/commons/f/fc/Luke_Harper_April_2015.jpg');
         contact2.favorite = true;
-        this.contacts = [contact2];
+        this.contacts = [contact2];*/
         this.detectChanges();
     }
 
@@ -68,8 +68,8 @@ export class ContactsComponent implements OnInit {
 
     showContactDetails(contact: Contact) {
         this.contactForDetails = contact;
-        let phoneNumbers = [new PhoneNumber('555-1234', 'HOME'), new PhoneNumber('555-5678', 'WORK')];
-        this.contactForDetails = new Contact(1, 'Luke', 'Harper', 'lukeharper@wwe.com', phoneNumbers, 'https://upload.wikimedia.org/wikipedia/commons/f/fc/Luke_Harper_April_2015.jpg');
+        /*let phoneNumbers = [new PhoneNumber('555-1234', 'HOME'), new PhoneNumber('555-5678', 'WORK')];
+        this.contactForDetails = new Contact(1, 'Luke Harper', 'lukeharper@wwe.com', phoneNumbers, 'https://upload.wikimedia.org/wikipedia/commons/f/fc/Luke_Harper_April_2015.jpg');*/
         this.detailsMode = this.globalService.detailsModes.READONLY;
         this.showDetailsView = true;
         this.detectChanges();
@@ -79,24 +79,27 @@ export class ContactsComponent implements OnInit {
         this.showDetailsView = false;
         this.detectChanges();
     }
+
+    changeDetailsMode(mode: string) {
+        this.detailsMode = mode;
+        this.detectChanges();
+    }
 }
 
 export class Contact {
     id: number;
-    firstName: string;
-    lastName: string;
+    fullName: string;
     email: string;
     phoneNumbers: Array<PhoneNumber>;
     favorite: boolean;
     imageUrl: string;
 
-    constructor(id: number, firstName: string, lastName: string, email: string, phoneNumbers: Array<PhoneNumber>, imageUrl: string) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.phoneNumbers = phoneNumbers;
-        this.imageUrl = imageUrl;
+    constructor() {
+        this.id = null;
+        this.fullName = null;
+        this.email = null;
+        this.phoneNumbers = [];
+        this.imageUrl = null;
         this.favorite = false;
     }
 }

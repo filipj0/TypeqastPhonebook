@@ -30,11 +30,11 @@
                 <div class="profile-pic-wrapper abs-center-horizontal">
                     <img imgLoad [imageUrl]="contact.imageUrl">
                 </div>
-                <div class="profile-name abs-center-horizontal">{{contact.firstName}} {{contact.lastName}}</div>
+                <div class="profile-name abs-center-horizontal">{{contact.fullName}}</div>
             </div>
         </div>
     </div>
 </div>
 
 <app-contact-details-desktop *ngIf="showDetailsView" [contact]="contactForDetails" [mode]="detailsMode"
-                     [isMobileDevice]="isMobileDevice" (closeDetailsEmitter)="closeContactDetails()"></app-contact-details-desktop>
+                     [isMobileDevice]="isMobileDevice" (closeDetailsEmitter)="closeContactDetails()" (modeChangeEmitter)="changeDetailsMode($event)"></app-contact-details-desktop>

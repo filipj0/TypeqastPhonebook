@@ -15,7 +15,8 @@ export class SvgService {
         FAV_ICON: 'fav_icon',
         FAV_FULL_ICON: 'fav_full_icon',
         MAIL_ICON: 'mail_icon',
-        PHONE_ICON: 'phone_icon'
+        PHONE_ICON: 'phone_icon',
+        PLUS_ICON: 'plus_icon'
     };
 
     constructor(private http: HttpClient, private domSanitizer: DomSanitizer) {

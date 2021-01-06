@@ -16,20 +16,8 @@
       input {
         height: 100%;
         width: 100%;
-        box-sizing: border-box;
         border: 1px solid $greyLight;
-        border-radius: 4px;
-        background-color: white;
         box-shadow: 0 2px 34px 0 $greyShadow;
-        padding-left: 63px;
-        padding-right: 15px;
-        font-size: $fontRegular;
-        color: $greyPrime;
-        outline: none;
-
-        &:focus {
-          border-color: $tealPrime;
-        }
       }
 
       img {

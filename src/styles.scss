@@ -51,7 +51,7 @@
   overflow: hidden;
   background-color: $tileImageBackground;
 
-  img {
+  img:not(.image-upload-icon) {
     position: absolute;
     left: 50%;
     top: 50%;
@@ -75,21 +75,86 @@
   }
 }
 
+// Global element styles
+input {
+  border-radius: 4px;
+  box-sizing: border-box;
+  border: 1px solid $greyPrime;
+  background-color: white;
+  padding: 0 30px 0 30px;
+  font-size: $fontRegular;
+  color: $greyPrime;
+  outline: none;
+
+  &:focus{
+    border-color: $tealPrime;
+  }
+
+  &.invalid {
+    border-color: red;
+  }
+
+  &::placeholder{
+    font-size: $fontSmall;
+    color: $greyPrime;
+    opacity: .4;
+  }
+}
+
+button {
+  height: 42px;
+  width: 160px;
+  border-radius: 28.5px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  user-select: none;
+  color: white;
+
+  &.cancel-btn {
+    background-color: $greyPrime;
+  }
+
+  &.submit-btn {
+    background-color: $tealPrime;
+  }
+}
+
 // SVG rules
-.tile-header-icon svg, .header-icon svg {
+svg {
   position: absolute;
   margin: auto;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
-  fill: $greyPrime;
   width: 100%;
   height: 100%;
+}
+
+.tile-header-icon svg, .header-icon svg {
+  fill: $greyPrime;
   cursor: pointer;
 
   &:hover {
     fill: $tealPrime;
+  }
+}
+
+.phone-delete {
+  &:hover {
+    border-color: $tealPrime;
+
+    svg {
+      fill: $tealPrime;
+    }
+  }
+
+  svg {
+    width: 50%;
+    height: auto;
+    fill: $greyPrime;
+    transform: rotate(45deg);
   }
 }
 

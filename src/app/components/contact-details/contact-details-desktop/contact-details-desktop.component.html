@@ -1,21 +1,25 @@
 <div id="contactDetailsArea">
     <div class="inner abs-center-horizontal">
-        <div class="profile-pic-wrapper">
-            <img imgLoad [imageUrl]="contact.imageUrl">
+        <div class="profile-pic-wrapper" [ngClass]="{'upload-enabled': mode !== globalService.detailsModes.READONLY}">
+            <img *ngIf="imageUrl" imgLoad [imageUrl]="imageUrl">
+            <img *ngIf=" mode !== globalService.detailsModes.READONLY" class="abs-center image-upload-icon"
+                 [ngClass]="{'image-exists': imageUrl != null}" src="./assets/images/upload_icon.png">
         </div>
         <div id="contactDetails">
             <div class="header">
                 <div class="header-icon back-btn" [innerHTML]="svgService.getSvg(svgService.svgKeys.BACK_ICON)"
                      (click)="closeDetailsEmitter.emit()"></div>
-                <div *ngIf="mode === globalService.detailsModes.READONLY"
-                     class="header-name">{{contact.firstName}} {{contact.lastName}}</div>
-                <div class="header-icon" [innerHTML]="svgService.getSvg(svgService.svgKeys.EDIT_ICON)"></div>
-                <div *ngIf="!contact.favorite" class="header-icon fav-icon"
-                     [innerHTML]="svgService.getSvg(svgService.svgKeys.FAV_ICON)"></div>
-                <div *ngIf="contact.favorite" class="header-icon fav-icon"
-                     [innerHTML]="svgService.getSvg(svgService.svgKeys.FAV_FULL_ICON)"></div>
+                <ng-container *ngIf="mode === globalService.detailsModes.READONLY">
+                    <div class="header-name">{{contact.fullName}}</div>
+                    <div class="header-icon" [innerHTML]="svgService.getSvg(svgService.svgKeys.EDIT_ICON)"></div>
+                    <div *ngIf="!contact?.favorite" class="header-icon fav-icon"
+                         [innerHTML]="svgService.getSvg(svgService.svgKeys.FAV_ICON)"></div>
+                    <div *ngIf="contact?.favorite" class="header-icon fav-icon"
+                         [innerHTML]="svgService.getSvg(svgService.svgKeys.FAV_FULL_ICON)"></div>
+                </ng-container>
             </div>
-            <table class="abs-center-horizontal content-data-table" *ngIf="mode === globalService.detailsModes.READONLY">
+            <table class="abs-center-horizontal content-data-table"
+                   *ngIf="mode === globalService.detailsModes.READONLY">
                 <tr>
                     <td>
                         <div class="label-with-icon">
@@ -31,11 +35,6 @@
                         <label>numbers</label>
                     </td>
                     <td class="contact-data phone-data">
-                      <!--  <div *ngFor="let phoneNumber of contact.phoneNumbers">
-                            <div class="phone-type">{{phoneNumber.type}}</div>
-                            <div class="phone-number">{{phoneNumber.number}}</div>
-                            <br><br>
-                        </div>-->
                         <table>
                             <tr *ngFor="let phoneNumber of contact.phoneNumbers">
                                 <td>{{phoneNumber.type}}</td>
@@ -45,6 +44,82 @@
                     </td>
                 </tr>
             </table>
+            <div class="contact-form" *ngIf="mode !== globalService.detailsModes.READONLY">
+                <form [formGroup]="form" (ngSubmit)="saveChanges(form)">
+                    <div class="form-control">
+                        <div class="label-with-icon">
+                            <img class="icon" src="./assets/images/profile_icon.png">
+                            <label>full name</label>
+                        </div>
+                        <input type="text" formControlName="fullName" placeholder="Full name"
+                               [ngClass]="{'invalid': showFormValidationErrors && fullNameControl.invalid}">
+                        <div *ngIf="showFormValidationErrors && fullNameControl.invalid" class="form-error">
+                            Name is required.
+                        </div>
+                    </div>
+                    <div class="form-control">
+                        <div class="label-with-icon">
+                            <img class="icon" src="./assets/images/mail_icon.png">
+                            <label>email</label>
+                        </div>
+                        <input type="text" formControlName="email" placeholder="Email"
+                               [ngClass]="{'invalid': showFormValidationErrors && emailControl.invalid}">
+                        <div *ngIf="showFormValidationErrors && emailControl.invalid" class="form-error">
+                            {{emailControl.errors.required ? 'Email address is required' : emailControl.errors.invalidFormat}}
+                        </div>
+                    </div>
+                    <div class="form-control phone-inputs" formArrayName="phoneNumbers">
+                        <div class="label-with-icon">
+                            <img class="icon" src="./assets/images/phone_icon.png">
+                            <label>numbers</label>
+                        </div>
+                        <div *ngFor="let phoneNumberControl of phoneNumbersArrayControl, let i = index"
+                             class="phone-input">
+                            <div>
+                                <input type="text" placeholder="Number"
+                                       [formControl]="phoneNumberControl.controls.number"
+                                       value="{{phoneNumberControl.controls.number.value}}"
+                                       [ngClass]="{'invalid': showFormValidationErrors && phoneNumberControl.controls.number.invalid}">
+                                <div *ngIf="showFormValidationErrors && phoneNumberControl.controls.number.invalid"
+                                     class="form-error">
+                                    {{phoneNumberControl.controls.number.errors.required ? 'Phone number is required' : phoneNumberControl.controls.number.errors.invalidFormat}}
+                                </div>
+                            </div>
+                            <div>
+                                <input type="text" class="phone-type"
+                                       placeholder="type"
+                                       [formControl]="phoneNumberControl.controls.type"
+                                       value="{{phoneNumberControl.controls.type.value}}"
+                                       [ngClass]="{'invalid': showFormValidationErrors && phoneNumberControl.controls.type.invalid}">
+                                <div *ngIf="showFormValidationErrors && phoneNumberControl.controls.type.invalid"
+                                     class="form-error">Phone type is required.
+                                </div>
+                            </div>
+                            <div class="phone-delete" [innerHTML]="svgService.getSvg(svgService.svgKeys.PLUS_ICON)"
+                                 (click)="removePhoneNumber(i)"></div>
+                        </div>
+                        <div class="phone-add">
+                            <div class="icon" (click)="addPhoneNumber()">
+                                <img class="abs-center" src="./assets/images/add_icon.png">
+                            </div>
+                            <div class="text">Add number</div>
+                        </div>
+                    </div>
+                    <div class="form-buttons">
+                        <button class="cancel-btn" type="button" (click)="cancelChanges()">Cancel</button>
+                        <button class="submit-btn" type="submit">Save</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </div>
+
+<!--<div id="imageUrlInputWrapper" class="abs-center">
+    <div class="overlay abs-center"></div>
+    <div class="popup abs-center">
+        <label for="imageUrlInput">Image URL: </label>
+        <input id="imageUrlInput" class="abs-center-vertical">
+        <button class="submit-btn">Upload image</button>
+    </div>
+</div>-->
