@@ -1,9 +1,13 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
+import { Location } from '@angular/common';
 import { Contact, PhoneNumber } from '../contacts/contacts.component';
 import { FormArray, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
-import { GlobalService } from '../../services/global.service';
+import { DetailsService } from '../../services/details.service';
 import { SvgService } from '../../services/svg.service';
-import { LocationStrategy } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
+import { ApiService } from '../../services/api.service';
+import { ViewStateService } from '../../services/view-state.service';
+import { GlobalService } from '../../services/global.service';
 
 @Component({
     selector: 'app-contact-details',
@@ -11,39 +15,48 @@ import { LocationStrategy } from '@angular/common';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ContactDetailsComponent implements OnInit {
-    @Input() contact: Contact;
-    @Input() mode: string;
-    @Input() isMobileDevice: boolean;
-
-    @Output() closeDetailsEmitter = new EventEmitter();
-    @Output() modeChangeEmitter = new EventEmitter();
-    @Output() saveContactEmitter = new EventEmitter<Contact>();
-    @Output() generateIdEmitter = new EventEmitter<Contact>();
-    @Output() deletePromptEmitter = new EventEmitter<Contact>();
-    @Output() toggleFavoriteEmitter = new EventEmitter<number>();
-
+    public contact: Contact = null;
     public form: FormGroup;
     public showFormValidationErrors: boolean = false;
     public imageUrl: string = null;
     public imageUrlInput: string = '';
     public showImageUrlInput: boolean = false;
     public showImageUrlInputError: boolean = false;
-    public imageUploadEnabled: boolean = true;
+    public imageUploadEnabled: boolean = false;
+    public showDeletePrompt: boolean = false;
+    public isMobileDevice: boolean = false;
 
-    constructor(@Inject(GlobalService) public globalService: GlobalService,
+    constructor(@Inject(DetailsService) public detailsService: DetailsService,
                 @Inject(SvgService) public svgService: SvgService,
                 private cd: ChangeDetectorRef,
-                private location: LocationStrategy) {
-        history.pushState(null, null, window.location.href);
-        this.location.onPopState(() => {
-            this.closeDetailsEmitter.emit();
-        });
+                private viewStateService: ViewStateService,
+                private globalService: GlobalService,
+                private api: ApiService,
+                public location: Location,
+                private route: ActivatedRoute) {
     }
 
     ngOnInit(): void {
+        const routeParams = this.route.snapshot.paramMap;
+        const contactIdFromRoute = Number(routeParams.get('id'));
+
+        this.isMobileDevice = this.viewStateService.checkIfMobileDevice();
+        if (this.detailsService.detailsMode === null) {
+            if (contactIdFromRoute) {
+                this.detailsService.detailsMode = this.detailsService.detailsModes.READONLY;
+            }
+            else {
+                this.detailsService.detailsMode = this.detailsService.detailsModes.NEW;
+            }
+        }
+
+        if (this.detailsService.detailsMode !== this.detailsService.detailsModes.NEW) {
+            this.contact = this.api.getContactDetails(contactIdFromRoute);
+        }
+
         this.imageUrl = this.contact ? this.contact.imageUrl : null;
-        this.imageUploadEnabled = this.mode !== this.globalService.detailsModes.READONLY;
-        if (this.mode !== this.globalService.detailsModes.READONLY) {
+        this.imageUploadEnabled = this.detailsService.detailsMode !== this.detailsService.detailsModes.READONLY;
+        if (this.detailsService.detailsMode !== this.detailsService.detailsModes.READONLY) {
             this.initForm();
         }
         this.detectChanges();
@@ -61,7 +74,7 @@ export class ContactDetailsComponent implements OnInit {
             email: new FormControl('', [Validators.required, CustomValidators.email]),
             phoneNumbers: new FormArray([])
         });
-        if (this.mode === this.globalService.detailsModes.EDIT) {
+        if (this.detailsService.detailsMode === this.detailsService.detailsModes.EDIT) {
             this.fullNameControl.setValue(this.contact.fullName);
             this.emailControl.setValue(this.contact.email);
             this.contact.phoneNumbers.forEach((phoneNumber: PhoneNumber) => {
@@ -71,8 +84,16 @@ export class ContactDetailsComponent implements OnInit {
     }
 
     enterEditMode() {
-        this.mode = this.globalService.detailsModes.EDIT;
+        this.detailsService.detailsMode = this.detailsService.detailsModes.EDIT;
+        this.imageUploadEnabled = true;
         this.initForm();
+        this.detectChanges();
+    }
+
+    enterReadOnlyMode() {
+        this.detailsService.detailsMode = this.detailsService.detailsModes.READONLY;
+        this.imageUploadEnabled = false;
+        this.detectChanges();
     }
 
     addPhoneNumber(number: string = '', type: string = '') {
@@ -90,10 +111,10 @@ export class ContactDetailsComponent implements OnInit {
         this.showFormValidationErrors = !form.valid;
         this.detectChanges();
         if (form.valid) {
-            if (this.mode === this.globalService.detailsModes.NEW) {
+            if (this.detailsService.detailsMode === this.detailsService.detailsModes.NEW) {
                 this.contact = new Contact();
             }
-            this.contact.id = this.mode === this.globalService.detailsModes.NEW ? null : this.contact.id;
+            this.contact.id = this.detailsService.detailsMode === this.detailsService.detailsModes.NEW ? null : this.contact.id;
             this.contact.fullName = this.fullNameControl.value;
             this.contact.email = this.emailControl.value;
             this.contact.imageUrl = this.imageUrl;
@@ -101,18 +122,18 @@ export class ContactDetailsComponent implements OnInit {
             this.phoneNumbersArrayControl.forEach((phoneNumberCtrl: FormGroup) => {
                 this.contact.phoneNumbers.push(new PhoneNumber(phoneNumberCtrl.controls.number.value, phoneNumberCtrl.controls.type.value));
             });
-            console.log(this.contact);
-            this.saveContactEmitter.emit(this.contact);
-            this.closeDetailsEmitter.emit();
+            this.detailsService.saveContact(this.contact);
+            this.globalService.showToastSubject.next(this.detailsService.detailsMode === this.detailsService.detailsModes.NEW ? 'New contact ' + this.contact.fullName + ' has been created successfully' : 'Changes have been saved');
+            this.enterReadOnlyMode();
         }
     }
 
     cancelChanges() {
-        if (this.mode === this.globalService.detailsModes.NEW) {
-            this.closeDetailsEmitter.emit();
+        if (this.detailsService.detailsMode === this.detailsService.detailsModes.NEW) {
+            this.location.back();
         }
         else {
-            this.modeChangeEmitter.emit(this.globalService.detailsModes.READONLY);
+            this.enterReadOnlyMode();
         }
     }
 
@@ -133,6 +154,13 @@ export class ContactDetailsComponent implements OnInit {
         }
         this.imageUrl = this.imageUrlInput;
         this.toggleImageUrlInputPopup(false);
+    }
+
+    toggleFavorite(contactId: number) {
+        this.api.toggleFavorite(contactId).subscribe((favorite: boolean) => {
+            this.contact.favorite = favorite;
+            this.detectChanges();
+        });
     }
 
     get fullNameControl() {

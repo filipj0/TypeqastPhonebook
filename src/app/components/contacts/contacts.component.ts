@@ -1,50 +1,50 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, HostListener, Inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, HostListener, Inject, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ViewStateService } from '../../services/view-state.service';
 import { SvgService } from '../../services/svg.service';
-import { GlobalService } from '../../services/global.service';
+import { DetailsService } from '../../services/details.service';
 import { ApiService } from '../../services/api.service';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'app-contacts',
     templateUrl: './contacts.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ContactsComponent implements OnInit {
+export class ContactsComponent implements OnInit, OnDestroy {
+    private refreshContactListSubscription: Subscription;
+
     public isMobileDevice: boolean = false;
     public favoritesMode: boolean = false;
-    public showDetailsView: boolean = false;
-    public detailsMode: string = null;
     public contacts: Array<Contact> = [];
     public contactsDisplayed: Array<Contact> = [];
-    public contactForDetails: Contact = null;
     public contactForDelete: Contact = null;
     public showDeletePrompt: boolean = false;
     public filterContactsQuery: string = null;
 
     constructor(@Inject(SvgService) public svgService: SvgService,
-                @Inject(GlobalService) public globalService: GlobalService,
+                @Inject(DetailsService) public detailsService: DetailsService,
                 private router: Router,
                 private viewStateService: ViewStateService,
                 private cd: ChangeDetectorRef,
                 private api: ApiService) {
-        this.isMobileDevice = this.viewStateService.checkIfMobileResolution();
+        this.isMobileDevice = this.viewStateService.checkIfMobileDevice();
     }
 
     ngOnInit(): void {
+        this.refreshContactListSubscription = this.detailsService.refreshContactListSubjectObservable.subscribe(() => this.filterContacts());
         this.favoritesMode = this.router.url === '/favorites';
-        this.loadContacts();
+        this.filterContacts();
+    }
+
+    ngOnDestroy(): void {
+        this.refreshContactListSubscription.unsubscribe();
     }
 
     private detectChanges() {
         if (!this.cd['destroyed']) {
             this.cd.detectChanges();
         }
-    }
-
-    private loadContacts() {
-        this.filterContacts();
-        this.detectChanges();
     }
 
     public filterContacts() {
@@ -60,19 +60,8 @@ export class ContactsComponent implements OnInit {
         this.detectChanges();
     }
 
-    filterFavorites(contactList: Array<Contact>) {
+    private filterFavorites(contactList: Array<Contact>) {
         return contactList.filter((contact: Contact) => contact.favorite);
-    }
-
-    saveContact(contact: Contact) {
-        if (contact.id == null) {
-            contact.id = this.generateId();
-            this.api.addContact(contact);
-        }
-        else {
-            this.api.updateContact(contact);
-        }
-        this.filterContacts();
     }
 
     deleteContactPrompt(contact: Contact) {
@@ -81,66 +70,18 @@ export class ContactsComponent implements OnInit {
         this.detectChanges();
     }
 
-    deleteContact(approved: boolean) {
-        if (approved) {
-            this.api.deleteContact(this.contactForDelete.id);
-            this.filterContacts();
-        }
-        this.showDeletePrompt = false;
-        this.showDetailsView = false;
-        this.detectChanges();
-    }
-
     toggleFavorite(contactId: number) {
         this.api.toggleFavorite(contactId).subscribe((favorite: boolean) => {
-            let contactIndex = this.contactsDisplayed.findIndex((contact: Contact) => contact.id === contactId);
-            this.contactsDisplayed[contactIndex].favorite = favorite;
-            if (this.favoritesMode && !favorite) {
-                this.contactsDisplayed.splice(contactIndex, 1);
+            if (!this.favoritesMode) {
+                this.contactsDisplayed.find((contact: Contact) => contact.id === contactId).favorite = favorite;
+                this.detectChanges();
             }
-            this.detectChanges();
+            else {
+                let contactIndex = this.contactsDisplayed.findIndex((contact: Contact) => contact.id === contactId);
+                this.contactsDisplayed.splice(contactIndex, 1);
+                this.detectChanges();
+            }
         });
-    }
-
-    addNewContact() {
-        this.contactForDetails = null;
-        this.detailsMode = this.globalService.detailsModes.NEW;
-        this.showDetailsView = true;
-        this.detectChanges();
-    }
-
-    editContact(contact: Contact) {
-        this.contactForDetails = contact;
-        this.detailsMode = this.globalService.detailsModes.EDIT;
-        this.showDetailsView = true;
-        this.detectChanges();
-    }
-
-    showContactDetails(contact: Contact) {
-        this.contactForDetails = contact;
-        this.detailsMode = this.globalService.detailsModes.READONLY;
-        this.showDetailsView = true;
-        this.detectChanges();
-    }
-
-    closeContactDetails() {
-        this.showDetailsView = false;
-        this.detectChanges();
-    }
-
-    changeDetailsMode(mode: string) {
-        this.detailsMode = mode;
-        this.detectChanges();
-    }
-
-    generateId(): number {
-        if (this.contacts.length === 0) {
-            return 0;
-        }
-        let currentMaxId = Math.max.apply(Math, this.contacts.map((contact: Contact) => {
-            return contact.id;
-        }));
-        return currentMaxId + 1;
     }
 }
 

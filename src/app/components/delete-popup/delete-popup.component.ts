@@ -1,6 +1,6 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Contact } from '../contacts/contacts.component';
-import { ApiService } from '../../services/api.service';
+import { DetailsService } from '../../services/details.service';
 
 @Component({
     selector: 'app-delete-popup',
@@ -10,8 +10,13 @@ import { ApiService } from '../../services/api.service';
 export class DeletePopupComponent {
     @Input() contact: Contact;
 
-    @Output() deleteEmitter = new EventEmitter<boolean>();
+    @Output() closeEmitter = new EventEmitter();
 
-    constructor() {
+    constructor(public detailsService: DetailsService) {
+    }
+
+    delete() {
+        this.detailsService.deleteContact(this.contact.id);
+        this.closeEmitter.emit();
     }
 }

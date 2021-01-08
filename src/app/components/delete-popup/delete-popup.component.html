@@ -1,4 +1,4 @@
-<div id="deleteContactPopup" class="popupWrapper abs-center">
+<div id="deleteContactPopup" class="popupWrapper">
     <div class="overlay abs-center"></div>
     <div class="popup abs-center">
         <div class="header">Delete</div>
@@ -6,8 +6,8 @@
             <div class="question">Are you sure you want to delete this contact?</div>
             <div class="name">{{contact.fullName}}</div>
             <div class="buttons">
-                <button class="cancel-btn" (click)="this.deleteEmitter.emit(false)">Cancel</button>
-                <button class="submit-btn" (click)="this.deleteEmitter.emit(true)">Delete</button>
+                <button class="cancel-btn" (click)="closeEmitter.emit()">Cancel</button>
+                <button class="submit-btn" (click)="delete()">Delete</button>
             </div>
         </div>
     </div>

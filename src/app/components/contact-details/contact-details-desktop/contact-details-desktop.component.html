@@ -9,20 +9,20 @@
         <div id="contactDetails">
             <div class="header">
                 <div class="header-icon back-btn" [innerHTML]="svgService.getSvg(svgService.svgKeys.BACK_ICON)"
-                     (click)="closeDetailsEmitter.emit()"></div>
-                <ng-container *ngIf="mode === globalService.detailsModes.READONLY">
-                    <div class="header-name">{{contact.fullName}}</div>
+                     (click)="location.back()"></div>
+                <ng-container *ngIf="detailsService.detailsMode === detailsService.detailsModes.READONLY">
+                    <div class="header-name text-overflow-ellipsis">{{contact.fullName}}</div>
                     <div class="header-icon" [innerHTML]="svgService.getSvg(svgService.svgKeys.EDIT_ICON)"
                          (click)="enterEditMode()"></div>
                     <div *ngIf="!contact?.favorite" class="header-icon fav-icon"
                          [innerHTML]="svgService.getSvg(svgService.svgKeys.FAV_ICON)"
-                         (click)="toggleFavoriteEmitter.emit(contact.id)"></div>
+                         (click)="toggleFavorite(contact.id)"></div>
                     <div *ngIf="contact?.favorite" class="header-icon fav-icon"
                          [innerHTML]="svgService.getSvg(svgService.svgKeys.FAV_FULL_ICON)"
-                         (click)="toggleFavoriteEmitter.emit(contact.id)"></div>
+                         (click)="toggleFavorite(contact.id)"></div>
                 </ng-container>
-                <ng-container *ngIf="mode === globalService.detailsModes.EDIT">
-                    <div class="delete-option" (click)="deletePromptEmitter.emit(contact)">
+                <ng-container *ngIf="detailsService.detailsMode === detailsService.detailsModes.EDIT">
+                    <div class="delete-option" (click)="showDeletePrompt = true">
                         Delete
                         <div class="header-icon"
                              [innerHTML]="svgService.getSvg(svgService.svgKeys.DELETE_ICON)"></div>
@@ -30,7 +30,7 @@
                 </ng-container>
             </div>
             <table class="abs-center-horizontal content-data-table"
-                   *ngIf="mode === globalService.detailsModes.READONLY">
+                   *ngIf="detailsService.detailsMode === detailsService.detailsModes.READONLY">
                 <tr>
                     <td>
                         <div class="label-with-icon">
@@ -38,7 +38,7 @@
                             <label>email</label>
                         </div>
                     </td>
-                    <td class="contact-data">{{contact.email}}</td>
+                    <td class="contact-data text-overflow-ellipsis">{{contact.email}}</td>
                 </tr>
                 <tr>
                     <td class="label-with-icon">
@@ -55,7 +55,7 @@
                     </td>
                 </tr>
             </table>
-            <div class="contact-form" *ngIf="mode !== globalService.detailsModes.READONLY">
+            <div class="contact-form" *ngIf="detailsService.detailsMode !== detailsService.detailsModes.READONLY">
                 <form [formGroup]="form" (ngSubmit)="saveChanges(form)">
                     <div class="form-control">
                         <div class="label-with-icon">
@@ -126,7 +126,7 @@
     </div>
 </div>
 
-<div *ngIf="showImageUrlInput" id="imageUrlInputWrapper" class="popupWrapper abs-center">
+<div *ngIf="showImageUrlInput" id="imageUrlInputWrapper" class="popupWrapper">
     <div class="overlay abs-center"></div>
     <div class="popup abs-center">
         <label for="imageUrlInput">Image URL: </label>
@@ -140,3 +140,6 @@
         </div>
     </div>
 </div>
+
+<app-delete-popup *ngIf="showDeletePrompt" [contact]="contact"
+                  (closeEmitter)="showDeletePrompt = false"></app-delete-popup>

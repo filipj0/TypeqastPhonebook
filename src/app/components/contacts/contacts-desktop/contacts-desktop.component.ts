@@ -3,7 +3,7 @@ import { Contact, ContactsComponent } from '../contacts.component';
 import { Router } from '@angular/router';
 import { ViewStateService } from '../../../services/view-state.service';
 import { SvgService } from '../../../services/svg.service';
-import { GlobalService } from '../../../services/global.service';
+import { DetailsService } from '../../../services/details.service';
 import { ApiService } from '../../../services/api.service';
 
 @Component({
@@ -12,7 +12,7 @@ import { ApiService } from '../../../services/api.service';
     styleUrls: ['./contacts-desktop.component.scss']
 })
 export class ContactsDesktopComponent extends ContactsComponent {
-    constructor(svgService: SvgService, globalService: GlobalService, router: Router, viewStateService: ViewStateService, cd: ChangeDetectorRef, api: ApiService) {
-        super(svgService, globalService, router, viewStateService, cd, api);
+    constructor(svgService: SvgService, detailsService: DetailsService, router: Router, viewStateService: ViewStateService, cd: ChangeDetectorRef, api: ApiService) {
+        super(svgService, detailsService, router, viewStateService, cd, api);
     }
 }

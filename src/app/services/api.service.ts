@@ -38,11 +38,16 @@ export class ApiService {
         localStorage['contacts'] = JSON.stringify(contacts);
     }
 
-    toggleFavorite(contactId: number): Observable<boolean> {
+    toggleFavorite(contactId: number) {
         let contacts: Array<Contact> = this.getContacts();
         let contactIndex: number = contacts.findIndex((contact: Contact) => contact.id === contactId);
         contacts[contactIndex].favorite = !contacts[contactIndex].favorite;
         localStorage['contacts'] = JSON.stringify(contacts);
         return of(contacts[contactIndex].favorite);
+    }
+
+    getContactDetails(contactId: number): Contact {
+        let contacts: Array<Contact> = this.getContacts();
+        return contacts.find((contact: Contact) => contact.id === contactId);
     }
 }

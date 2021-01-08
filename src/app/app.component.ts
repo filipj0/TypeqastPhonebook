@@ -13,7 +13,7 @@ export class AppComponent implements OnInit {
     public activeOption: string;
 
     constructor(@Inject(SvgService)public svgService: SvgService, private viewStateService: ViewStateService, private router: Router) {
-        this.isMobileDevice = this.viewStateService.checkIfMobileResolution();
+        this.isMobileDevice = this.viewStateService.checkIfMobileDevice();
     }
 
     ngOnInit() {

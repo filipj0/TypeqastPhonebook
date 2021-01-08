@@ -1,9 +1,12 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ContactDetailsComponent } from '../contact-details.component';
-import { GlobalService } from '../../../services/global.service';
+import { DetailsService } from '../../../services/details.service';
 import { SvgService } from '../../../services/svg.service';
 import { ApiService } from '../../../services/api.service';
-import { LocationStrategy } from '@angular/common';
+import { Location } from '@angular/common';
+import { ViewStateService } from '../../../services/view-state.service';
+import { GlobalService } from '../../../services/global.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
     selector: 'app-contact-details-desktop',
@@ -11,7 +14,15 @@ import { LocationStrategy } from '@angular/common';
     styleUrls: ['./contact-details-desktop.component.scss']
 })
 export class ContactDetailsDesktopComponent extends ContactDetailsComponent {
-    constructor(globalService: GlobalService, svgService: SvgService, cd: ChangeDetectorRef, location: LocationStrategy) {
-        super(globalService, svgService, cd, location);
+    constructor(detailsService: DetailsService,
+                svgService: SvgService,
+                cd: ChangeDetectorRef,
+                viewStateService: ViewStateService,
+                globalService: GlobalService,
+                api: ApiService,
+                location: Location,
+                route: ActivatedRoute) {
+        super(detailsService, svgService, cd, viewStateService, globalService, api, location, route);
+
     }
 }

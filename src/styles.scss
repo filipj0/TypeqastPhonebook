@@ -44,6 +44,12 @@
   bottom: 0;
 }
 
+.text-overflow-ellipsis{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 // Global specific classes
 .profile-pic-wrapper {
   position: absolute;
@@ -77,6 +83,11 @@
 }
 
 .popupWrapper {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
   z-index: 1;
 
   .overlay {

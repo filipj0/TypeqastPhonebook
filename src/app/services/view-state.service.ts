@@ -13,7 +13,7 @@ export class ViewStateService {
         }
     }
 
-    public checkIfMobileResolution(): boolean {
+    public checkIfMobileDevice(): boolean {
         return this.isMobileResolution;
     }
 }

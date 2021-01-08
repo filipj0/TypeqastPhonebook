@@ -15,6 +15,7 @@ import { ContactDetailsMobileComponent } from './components/contact-details/cont
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DeletePopupComponent } from './components/delete-popup/delete-popup.component';
 import { StopClickPropagationDirective } from './directives/stop-click-propagation';
+import { ToastComponent } from './components/toast/toast.component';
 
 @NgModule({
     declarations: [
@@ -27,7 +28,8 @@ import { StopClickPropagationDirective } from './directives/stop-click-propagati
         StopClickPropagationDirective,
         ContactDetailsDesktopComponent,
         ContactDetailsMobileComponent,
-        DeletePopupComponent
+        DeletePopupComponent,
+        ToastComponent
     ],
     imports: [
         BrowserModule,

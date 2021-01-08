@@ -1,15 +1,12 @@
 import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root'
 })
 export class GlobalService {
-    public detailsModes = {
-        READONLY: 'READONLY',
-        EDIT: 'EDIT',
-        NEW: 'NEW'
-    };
+  public showToastSubject = new Subject<any>();
+  public showToastSubjectObservable = this.showToastSubject.asObservable();
 
-    constructor() {
-    }
+  constructor() { }
 }

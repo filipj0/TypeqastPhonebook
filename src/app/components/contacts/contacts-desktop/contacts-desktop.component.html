@@ -7,13 +7,14 @@
     </div>
 
     <div id="contactList" [ngClass]="{'search-bar-hidden': contacts.length === 0}">
-        <div id="newContact" class="tile" (click)="addNewContact()">
+        <div id="newContact" class="tile" (click)="detailsService.openDetails(null, detailsService.detailsModes.NEW)">
             <div class="inner abs-center">
                 <img class="abs-center-horizontal" src="../assets/images/add_icon.png">
                 <div class="text abs-center-horizontal">Add new</div>
             </div>
         </div>
-        <div *ngFor="let contact of contactsDisplayed" class="tile" (click)="showContactDetails(contact)">
+        <div *ngFor="let contact of contactsDisplayed" class="tile"
+             (click)="detailsService.openDetails(contact.id, detailsService.detailsModes.READONLY)">
             <div class="tile-header">
                 <div class="tile-header-icon fav-icon" (click)="toggleFavorite(contact.id)" stop-click-propagation>
                     <div *ngIf="!contact.favorite" class="off"
@@ -25,24 +26,19 @@
                      [innerHTML]="svgService.getSvg(svgService.svgKeys.DELETE_ICON)"
                      (click)="deleteContactPrompt(contact)" stop-click-propagation></div>
                 <div class="tile-header-icon edit-icon"
-                     [innerHTML]="svgService.getSvg(svgService.svgKeys.EDIT_ICON)" (click)="editContact(contact)"
+                     [innerHTML]="svgService.getSvg(svgService.svgKeys.EDIT_ICON)"
+                     (click)="detailsService.openDetails(contact.id, detailsService.detailsModes.EDIT)"
                      stop-click-propagation></div>
             </div>
             <div class="profile abs-center">
                 <div class="profile-pic-wrapper abs-center-horizontal">
                     <img imgLoad [imageUrl]="contact.imageUrl">
                 </div>
-                <div class="profile-name abs-center-horizontal">{{contact.fullName}}</div>
+                <div class="profile-name abs-center-horizontal text-overflow-ellipsis">{{contact.fullName}}</div>
             </div>
         </div>
     </div>
 </div>
 
-<app-contact-details-desktop *ngIf="showDetailsView" [contact]="contactForDetails" [mode]="detailsMode"
-                             [isMobileDevice]="isMobileDevice" (closeDetailsEmitter)="closeContactDetails()"
-                             (modeChangeEmitter)="changeDetailsMode($event)" (saveContactEmitter)="saveContact($event)"
-                             (deletePromptEmitter)="deleteContactPrompt($event)"
-                             (toggleFavoriteEmitter)="toggleFavorite($event)"></app-contact-details-desktop>
-
 <app-delete-popup *ngIf="showDeletePrompt" [contact]="contactForDelete"
-                  (deleteEmitter)="deleteContact($event)"></app-delete-popup>
+                  (closeEmitter)="showDeletePrompt = false"></app-delete-popup>
