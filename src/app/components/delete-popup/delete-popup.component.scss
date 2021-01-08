@@ -1,0 +1,53 @@
+@import "src/theme.scss";
+
+$headerBorder: #DCDCDC;
+
+#deleteContactPopup {
+  .popup {
+    height: 240px;
+    width: 480px;
+
+    .header {
+      font-size: $fontSmall;
+      color: $greyPrime;
+      border-bottom: 1px solid $headerBorder;
+      height: 60px;
+      line-height: 60px;
+    }
+
+    .body {
+      .question {
+        font-size: $fontSmall;
+        color: $greyPrime;
+        width: 100%;
+        text-align: center;
+        margin-top: 30px;
+      }
+
+      .name {
+        font-size: $fontRegular;
+        color: $tealPrime;
+        width: 100%;
+        text-align: center;
+        margin-top: 30px;
+      }
+
+      .buttons {
+        position: absolute;
+        bottom: 60px;
+        left: 0;
+        right: 0;
+
+        .cancel-btn {
+          position: absolute;
+          left: 30px
+        }
+
+        .submit-btn {
+          position: absolute;
+          right: 30px;
+        }
+      }
+    }
+  }
+}

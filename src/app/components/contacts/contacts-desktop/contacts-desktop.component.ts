@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { ViewStateService } from '../../../services/view-state.service';
 import { SvgService } from '../../../services/svg.service';
 import { GlobalService } from '../../../services/global.service';
+import { ApiService } from '../../../services/api.service';
 
 @Component({
     selector: 'app-contacts-desktop',
@@ -11,7 +12,7 @@ import { GlobalService } from '../../../services/global.service';
     styleUrls: ['./contacts-desktop.component.scss']
 })
 export class ContactsDesktopComponent extends ContactsComponent {
-    constructor(svgService: SvgService, globalService: GlobalService, router: Router, viewStateService: ViewStateService, cd: ChangeDetectorRef) {
-        super(svgService, globalService, router, viewStateService, cd);
+    constructor(svgService: SvgService, globalService: GlobalService, router: Router, viewStateService: ViewStateService, cd: ChangeDetectorRef, api: ApiService) {
+        super(svgService, globalService, router, viewStateService, cd, api);
     }
 }

@@ -1,8 +1,9 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, HostListener, Inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ViewStateService } from '../../services/view-state.service';
 import { SvgService } from '../../services/svg.service';
 import { GlobalService } from '../../services/global.service';
+import { ApiService } from '../../services/api.service';
 
 @Component({
     selector: 'app-contacts',
@@ -11,26 +12,28 @@ import { GlobalService } from '../../services/global.service';
 })
 export class ContactsComponent implements OnInit {
     public isMobileDevice: boolean = false;
+    public favoritesMode: boolean = false;
     public showDetailsView: boolean = false;
     public detailsMode: string = null;
     public contacts: Array<Contact> = [];
+    public contactsDisplayed: Array<Contact> = [];
     public contactForDetails: Contact = null;
+    public contactForDelete: Contact = null;
+    public showDeletePrompt: boolean = false;
+    public filterContactsQuery: string = null;
 
     constructor(@Inject(SvgService) public svgService: SvgService,
                 @Inject(GlobalService) public globalService: GlobalService,
                 private router: Router,
                 private viewStateService: ViewStateService,
-                private cd: ChangeDetectorRef) {
+                private cd: ChangeDetectorRef,
+                private api: ApiService) {
         this.isMobileDevice = this.viewStateService.checkIfMobileResolution();
     }
 
     ngOnInit(): void {
-        if (this.router.url === '/contacts') {
-            this.loadContacts();
-        }
-        else {
-            this.loadFavorites();
-        }
+        this.favoritesMode = this.router.url === '/favorites';
+        this.loadContacts();
     }
 
     private detectChanges() {
@@ -40,36 +43,81 @@ export class ContactsComponent implements OnInit {
     }
 
     private loadContacts() {
-        this.contacts = [];
-       /* let phoneNumbers = [new PhoneNumber('555-1234', 'HOME'), new PhoneNumber('555-5678', 'WORK')];
-        let contact1 = new Contact(0, 'Brodie Lee', 'brodielee@aew.com', phoneNumbers, 'https://site-cdn.givemesport.com/images/20/12/27/c5ea07fab6cc850d07e6c53d02e2d8e7/1201.jpg');
-        let contact2 = new Contact(1, 'Luke Harper', 'lukeharper@wwe.com', phoneNumbers, 'https://upload.wikimedia.org/wikipedia/commons/f/fc/Luke_Harper_April_2015.jpg');
-        contact2.favorite = true;
-        let contact3 = new Contact(2, 'Jon Huber', 'jonhuber@gmail.com', phoneNumbers, 'https://akns-images.eonline.com/eol_images/Entire_Site/20201127/rs_1024x759-201227091535-1024-Luke-Harper-Brodie-Lee.cm.122720.jpg');
-        this.contacts = [contact1, contact2, contact3];*/
+        this.filterContacts();
         this.detectChanges();
-        this.addNewContact();
     }
 
-    private loadFavorites() {
-        this.contacts = [];
-        /*let phoneNumbers = [new PhoneNumber('555-1234', 'HOME'), new PhoneNumber('555-5678', 'WORK')];
-        let contact2 = new Contact(1, 'Luke Harper', 'lukeharper@wwe.com', phoneNumbers, 'https://upload.wikimedia.org/wikipedia/commons/f/fc/Luke_Harper_April_2015.jpg');
-        contact2.favorite = true;
-        this.contacts = [contact2];*/
+    public filterContacts() {
+        this.contacts = this.api.getContacts();
+        let contactsMatchingQuery: Array<Contact> = [];
+        if (!this.filterContactsQuery) {
+            contactsMatchingQuery = this.contacts;
+        }
+        else {
+            contactsMatchingQuery = this.contacts.filter((contact: Contact) => contact.fullName.toLowerCase().includes(this.filterContactsQuery.toLowerCase()));
+        }
+        this.contactsDisplayed = this.favoritesMode ? this.filterFavorites(contactsMatchingQuery) : contactsMatchingQuery;
         this.detectChanges();
+    }
+
+    filterFavorites(contactList: Array<Contact>) {
+        return contactList.filter((contact: Contact) => contact.favorite);
+    }
+
+    saveContact(contact: Contact) {
+        if (contact.id == null) {
+            contact.id = this.generateId();
+            this.api.addContact(contact);
+        }
+        else {
+            this.api.updateContact(contact);
+        }
+        this.filterContacts();
+    }
+
+    deleteContactPrompt(contact: Contact) {
+        this.contactForDelete = contact;
+        this.showDeletePrompt = true;
+        this.detectChanges();
+    }
+
+    deleteContact(approved: boolean) {
+        if (approved) {
+            this.api.deleteContact(this.contactForDelete.id);
+            this.filterContacts();
+        }
+        this.showDeletePrompt = false;
+        this.showDetailsView = false;
+        this.detectChanges();
+    }
+
+    toggleFavorite(contactId: number) {
+        this.api.toggleFavorite(contactId).subscribe((favorite: boolean) => {
+            let contactIndex = this.contactsDisplayed.findIndex((contact: Contact) => contact.id === contactId);
+            this.contactsDisplayed[contactIndex].favorite = favorite;
+            if (this.favoritesMode && !favorite) {
+                this.contactsDisplayed.splice(contactIndex, 1);
+            }
+            this.detectChanges();
+        });
     }
 
     addNewContact() {
+        this.contactForDetails = null;
         this.detailsMode = this.globalService.detailsModes.NEW;
+        this.showDetailsView = true;
+        this.detectChanges();
+    }
+
+    editContact(contact: Contact) {
+        this.contactForDetails = contact;
+        this.detailsMode = this.globalService.detailsModes.EDIT;
         this.showDetailsView = true;
         this.detectChanges();
     }
 
     showContactDetails(contact: Contact) {
         this.contactForDetails = contact;
-        /*let phoneNumbers = [new PhoneNumber('555-1234', 'HOME'), new PhoneNumber('555-5678', 'WORK')];
-        this.contactForDetails = new Contact(1, 'Luke Harper', 'lukeharper@wwe.com', phoneNumbers, 'https://upload.wikimedia.org/wikipedia/commons/f/fc/Luke_Harper_April_2015.jpg');*/
         this.detailsMode = this.globalService.detailsModes.READONLY;
         this.showDetailsView = true;
         this.detectChanges();
@@ -83,6 +131,16 @@ export class ContactsComponent implements OnInit {
     changeDetailsMode(mode: string) {
         this.detailsMode = mode;
         this.detectChanges();
+    }
+
+    generateId(): number {
+        if (this.contacts.length === 0) {
+            return 0;
+        }
+        let currentMaxId = Math.max.apply(Math, this.contacts.map((contact: Contact) => {
+            return contact.id;
+        }));
+        return currentMaxId + 1;
     }
 }
 

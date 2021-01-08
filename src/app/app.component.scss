@@ -42,6 +42,7 @@
       color: $greyPrime;
       font-size: $fontRegular;
       text-decoration: none;
+      cursor: pointer;
 
       &.active {
         color: $tealPrime;

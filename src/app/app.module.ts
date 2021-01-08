@@ -12,7 +12,9 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ImageLoadDirective } from './directives/img-load.directive';
 import { ContactDetailsDesktopComponent } from './components/contact-details/contact-details-desktop/contact-details-desktop.component';
 import { ContactDetailsMobileComponent } from './components/contact-details/contact-details-mobile/contact-details-mobile.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { DeletePopupComponent } from './components/delete-popup/delete-popup.component';
+import { StopClickPropagationDirective } from './directives/stop-click-propagation';
 
 @NgModule({
     declarations: [
@@ -22,14 +24,17 @@ import { ReactiveFormsModule } from '@angular/forms';
         ContactsMobileComponent,
         ContactDetailsComponent,
         ImageLoadDirective,
+        StopClickPropagationDirective,
         ContactDetailsDesktopComponent,
-        ContactDetailsMobileComponent
+        ContactDetailsMobileComponent,
+        DeletePopupComponent
     ],
     imports: [
         BrowserModule,
         AppRoutingModule,
         HttpClientModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        FormsModule
     ],
     providers: [
         HttpClient,

@@ -1,8 +1,9 @@
 <div id="contactDetailsArea">
     <div class="inner abs-center-horizontal">
-        <div class="profile-pic-wrapper" [ngClass]="{'upload-enabled': mode !== globalService.detailsModes.READONLY}">
+        <div class="profile-pic-wrapper" [ngClass]="{'upload-enabled': imageUploadEnabled}"
+             (click)="imageUploadEnabled ? toggleImageUrlInputPopup(true) : null">
             <img *ngIf="imageUrl" imgLoad [imageUrl]="imageUrl">
-            <img *ngIf=" mode !== globalService.detailsModes.READONLY" class="abs-center image-upload-icon"
+            <img *ngIf="imageUploadEnabled" class="abs-center image-upload-icon"
                  [ngClass]="{'image-exists': imageUrl != null}" src="./assets/images/upload_icon.png">
         </div>
         <div id="contactDetails">
@@ -11,11 +12,21 @@
                      (click)="closeDetailsEmitter.emit()"></div>
                 <ng-container *ngIf="mode === globalService.detailsModes.READONLY">
                     <div class="header-name">{{contact.fullName}}</div>
-                    <div class="header-icon" [innerHTML]="svgService.getSvg(svgService.svgKeys.EDIT_ICON)"></div>
+                    <div class="header-icon" [innerHTML]="svgService.getSvg(svgService.svgKeys.EDIT_ICON)"
+                         (click)="enterEditMode()"></div>
                     <div *ngIf="!contact?.favorite" class="header-icon fav-icon"
-                         [innerHTML]="svgService.getSvg(svgService.svgKeys.FAV_ICON)"></div>
+                         [innerHTML]="svgService.getSvg(svgService.svgKeys.FAV_ICON)"
+                         (click)="toggleFavoriteEmitter.emit(contact.id)"></div>
                     <div *ngIf="contact?.favorite" class="header-icon fav-icon"
-                         [innerHTML]="svgService.getSvg(svgService.svgKeys.FAV_FULL_ICON)"></div>
+                         [innerHTML]="svgService.getSvg(svgService.svgKeys.FAV_FULL_ICON)"
+                         (click)="toggleFavoriteEmitter.emit(contact.id)"></div>
+                </ng-container>
+                <ng-container *ngIf="mode === globalService.detailsModes.EDIT">
+                    <div class="delete-option" (click)="deletePromptEmitter.emit(contact)">
+                        Delete
+                        <div class="header-icon"
+                             [innerHTML]="svgService.getSvg(svgService.svgKeys.DELETE_ICON)"></div>
+                    </div>
                 </ng-container>
             </div>
             <table class="abs-center-horizontal content-data-table"
@@ -115,11 +126,17 @@
     </div>
 </div>
 
-<!--<div id="imageUrlInputWrapper" class="abs-center">
+<div *ngIf="showImageUrlInput" id="imageUrlInputWrapper" class="popupWrapper abs-center">
     <div class="overlay abs-center"></div>
     <div class="popup abs-center">
         <label for="imageUrlInput">Image URL: </label>
-        <input id="imageUrlInput" class="abs-center-vertical">
-        <button class="submit-btn">Upload image</button>
+        <div id="imageUrlInput">
+            <input [ngModel]="imageUrlInput" (ngModelChange)="imageUrlInput = $event" autofocus>
+            <div *ngIf="showImageUrlInputError" class="error">Image URL is required</div>
+        </div>
+        <div class="buttons">
+            <button class="cancel-btn" (click)="toggleImageUrlInputPopup(false)">Cancel</button>
+            <button class="submit-btn" (click)="saveImageUrl()">Upload image</button>
+        </div>
     </div>
-</div>-->
+</div>

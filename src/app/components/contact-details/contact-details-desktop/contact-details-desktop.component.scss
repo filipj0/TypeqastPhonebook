@@ -23,6 +23,10 @@ $imageUploadBg: rgba(45, 161, 173, 0.4);
         cursor: pointer;
       }
 
+      &:hover .image-upload-icon {
+        visibility: visible !important;
+      }
+
       .image-upload-icon {
         height: 20px;
         width: auto;
@@ -30,10 +34,6 @@ $imageUploadBg: rgba(45, 161, 173, 0.4);
 
         &.image-exists {
           visibility: hidden;
-
-          &:hover {
-            visibility: visible;
-          }
         }
       }
     }
@@ -49,6 +49,21 @@ $imageUploadBg: rgba(45, 161, 173, 0.4);
         height: 94px;
         width: 100%;
         border-bottom: 1px solid $tealPrime;
+
+        .delete-option {
+          position: relative;
+          color: $greyPrime;
+          font-size: $fontSmall;
+          height: 94px;
+          line-height: 94px;
+          width: 75px;
+          float: right;
+          cursor: pointer;
+
+          &:hover {
+            color: $tealPrime;
+          }
+        }
 
         .header-icon {
           position: relative;
@@ -236,33 +251,39 @@ $imageUploadBg: rgba(45, 161, 173, 0.4);
 }
 
 #imageUrlInputWrapper {
-  z-index: 1;
-
-  .overlay {
-    opacity: .5;
-    background-color: $tealPrime;
-  }
-
   .popup {
-    height: 10%;
-    width: 50%;
-    border: 2px solid $greyPrime;
-    border-radius: 25px;
-    background-color: white;
+    height: 150px;
+    width: 600px;
 
     label {
-      position: absolute;
-      top: 5%;
+      font-size: $fontRegular;
+      color: $tealPrime;
     }
 
-    input {
+    #imageUrlInput {
       height: 60px;
       width: 600px;
+      margin-top: 15px;
+
+      input {
+        width: 100%;
+        height: 100%;
+      }
+
+      .error {
+        font-size: $fontSmall;
+        color: red;
+      }
     }
 
-    button {
-      position: absolute;
-      bottom: 5%;
+    .buttons {
+      height: auto;
+      width: 100%;
+      margin-top: 25px;
+    }
+
+    .submit-btn {
+      float: right;
     }
   }
 }

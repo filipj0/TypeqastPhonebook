@@ -1,30 +1,32 @@
 <div id="contactListArea">
-    <div id="searchBar">
+    <div *ngIf="contacts.length > 0" id="searchBar">
         <div class="inner abs-center">
             <img class="abs-center-vertical" src="../assets/images/search_icon.png">
-            <input class="abs-center">
+            <input [(ngModel)]="filterContactsQuery" class="abs-center" (ngModelChange)="filterContacts()">
         </div>
     </div>
 
-    <div id="contactList">
+    <div id="contactList" [ngClass]="{'search-bar-hidden': contacts.length === 0}">
         <div id="newContact" class="tile" (click)="addNewContact()">
             <div class="inner abs-center">
                 <img class="abs-center-horizontal" src="../assets/images/add_icon.png">
                 <div class="text abs-center-horizontal">Add new</div>
             </div>
         </div>
-        <div *ngFor="let contact of contacts" class="tile" (click)="showContactDetails(contact)">
+        <div *ngFor="let contact of contactsDisplayed" class="tile" (click)="showContactDetails(contact)">
             <div class="tile-header">
-                <div class="tile-header-icon fav-icon">
+                <div class="tile-header-icon fav-icon" (click)="toggleFavorite(contact.id)" stop-click-propagation>
                     <div *ngIf="!contact.favorite" class="off"
                          [innerHTML]="svgService.getSvg(svgService.svgKeys.FAV_ICON)"></div>
                     <div *ngIf="contact.favorite" class="on"
                          [innerHTML]="svgService.getSvg(svgService.svgKeys.FAV_FULL_ICON)"></div>
                 </div>
                 <div class="tile-header-icon delete-icon"
-                     [innerHTML]="svgService.getSvg(svgService.svgKeys.DELETE_ICON)"></div>
+                     [innerHTML]="svgService.getSvg(svgService.svgKeys.DELETE_ICON)"
+                     (click)="deleteContactPrompt(contact)" stop-click-propagation></div>
                 <div class="tile-header-icon edit-icon"
-                     [innerHTML]="svgService.getSvg(svgService.svgKeys.EDIT_ICON)"></div>
+                     [innerHTML]="svgService.getSvg(svgService.svgKeys.EDIT_ICON)" (click)="editContact(contact)"
+                     stop-click-propagation></div>
             </div>
             <div class="profile abs-center">
                 <div class="profile-pic-wrapper abs-center-horizontal">
@@ -37,4 +39,10 @@
 </div>
 
 <app-contact-details-desktop *ngIf="showDetailsView" [contact]="contactForDetails" [mode]="detailsMode"
-                     [isMobileDevice]="isMobileDevice" (closeDetailsEmitter)="closeContactDetails()" (modeChangeEmitter)="changeDetailsMode($event)"></app-contact-details-desktop>
+                             [isMobileDevice]="isMobileDevice" (closeDetailsEmitter)="closeContactDetails()"
+                             (modeChangeEmitter)="changeDetailsMode($event)" (saveContactEmitter)="saveContact($event)"
+                             (deletePromptEmitter)="deleteContactPrompt($event)"
+                             (toggleFavoriteEmitter)="toggleFavorite($event)"></app-contact-details-desktop>
+
+<app-delete-popup *ngIf="showDeletePrompt" [contact]="contactForDelete"
+                  (deleteEmitter)="deleteContact($event)"></app-delete-popup>

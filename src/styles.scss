@@ -17,6 +17,7 @@
   margin: 0;
   overflow: auto;
   font-family: 'Lato Bold', sans-serif;
+  user-select: none;
 }
 
 // Global general classes
@@ -59,7 +60,7 @@
     height: auto;
     width: auto;
     opacity: 0;
-    transition: opacity 200ms;
+    // transition: opacity 200ms;
 
     &.horizontal-align {
       height: 100%;
@@ -75,6 +76,22 @@
   }
 }
 
+.popupWrapper {
+  z-index: 1;
+
+  .overlay {
+    background-color: black;
+    opacity: .4;
+  }
+
+  .popup {
+    border-radius: 4px;
+    background-color: white;
+    padding: 20px 30px 30px 30px;
+    box-shadow: 0 0 14px 0 rgba(99, 109, 255, 0.27);
+  }
+}
+
 // Global element styles
 input {
   border-radius: 4px;
@@ -86,7 +103,7 @@ input {
   color: $greyPrime;
   outline: none;
 
-  &:focus{
+  &:focus {
     border-color: $tealPrime;
   }
 
@@ -94,7 +111,7 @@ input {
     border-color: red;
   }
 
-  &::placeholder{
+  &::placeholder {
     font-size: $fontSmall;
     color: $greyPrime;
     opacity: .4;
@@ -139,6 +156,10 @@ svg {
   &:hover {
     fill: $tealPrime;
   }
+}
+
+.header .delete-option:hover svg {
+  fill: $tealPrime;
 }
 
 .phone-delete {
