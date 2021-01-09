@@ -23,6 +23,5 @@ export class ContactDetailsDesktopComponent extends ContactDetailsComponent {
                 location: Location,
                 route: ActivatedRoute) {
         super(detailsService, svgService, cd, viewStateService, globalService, api, location, route);
-
     }
 }

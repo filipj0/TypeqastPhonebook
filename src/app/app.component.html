@@ -1,10 +1,13 @@
 <div [ngClass]="{'mobile': isMobileDevice}">
     <div id="appHeader">
-        <img class="abs-center" src="../assets/images/typeqast_logo.png">
+        <div class="background abs-center"></div>
+        <div class="logo abs-center">
+            <img src="../assets/images/typeqast_logo.png">
+        </div>
         <div class="bottom-rect"></div>
     </div>
     <div *ngIf="svgService.svgsLoaded" id="appBody">
-        <div class="menu abs-center-horizontal">
+        <div #menu class="menu abs-center-horizontal">
             <a class="contacts-link" [ngClass]="{'active' : activeOption === 'contacts'}" routerLink="/contacts" (click)="activeOption = 'contacts'">All contacts</a>
             <span>|</span>
             <a class="favorites-link" [ngClass]="{'active' : activeOption === 'favorites'}" routerLink="/favorites" (click)="activeOption = 'favorites'">My Favorites</a>

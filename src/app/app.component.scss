@@ -1,11 +1,16 @@
 @import "../theme.scss";
 
 #appHeader {
-  position: relative;
+  position: fixed;
   height: 60px;
   width: 100%;
   min-width: 200px;
-  background: linear-gradient(182.65deg, #78C9CE 0%, #2496A2 99.98%, #2496A2 100%);
+  background-color: white;
+  z-index: 1;
+
+  .background {
+    background: linear-gradient(182.65deg, #78C9CE 0%, #2496A2 99.98%, #2496A2 100%);
+  }
 
   img {
     position: absolute;
@@ -29,23 +34,35 @@
   top: 60px;
   bottom: 0;
   width: 100%;
+  overflow: auto;
+
+  &::-webkit-scrollbar {
+    width: .3em;
+    height: .3em;
+    background-color: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: $colorTealPrime;
+  }
 
   .menu {
     height: 120px;
     width: 87.5%;
-    min-width: 300px;
-    border-bottom: $tealPrime solid 1px;
-    line-height: 120px;
+    border-bottom: $colorTealPrime solid 1px;
     text-align: center;
+    display: table;
 
     a {
-      color: $greyPrime;
+      color: $colorGreyPrime;
       font-size: $fontRegular;
       text-decoration: none;
       cursor: pointer;
+      display: table-cell;
+      vertical-align: middle;
 
       &.active {
-        color: $tealPrime;
+        color: $colorTealPrime;
       }
 
       &.contacts-link {
@@ -58,31 +75,41 @@
     }
 
     span {
-      color: $greyPrime;
+      color: $colorGreyPrime;
+      display: table-cell;
+      vertical-align: middle;
     }
   }
 }
 
 .mobile {
   #appHeader {
-    height: 50px;
+    height: 7.5%;
+
+    .logo{
+      height: 33%;
+      width: 100%;
+    }
 
     img {
-      height: 16.67px;
-      width: 150px;
+      position: relative;
+      height: 100%;
+      width: auto;
+      left: 50%;
+      transform: translateX(-50%);
     }
   }
 
-  #appBody{
-    top: 50px;
+  #appBody {
+    top: 7.5%;
 
     .menu {
-      height: 50px;
-      width: 85.3%;
-      line-height: 50px;
+      height: 7.5%;
+      width: 86.6%;
+      min-width: 250px;
 
       a {
-        font-size: $fontMobileRegular;
+        font-size: $fontMobileSmall;
       }
     }
   }

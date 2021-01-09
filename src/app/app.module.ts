@@ -16,6 +16,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DeletePopupComponent } from './components/delete-popup/delete-popup.component';
 import { StopClickPropagationDirective } from './directives/stop-click-propagation';
 import { ToastComponent } from './components/toast/toast.component';
+import { UploadImagePopupComponent } from './components/contact-details/upload-image-popup/upload-image-popup.component';
 
 @NgModule({
     declarations: [
@@ -29,7 +30,8 @@ import { ToastComponent } from './components/toast/toast.component';
         ContactDetailsDesktopComponent,
         ContactDetailsMobileComponent,
         DeletePopupComponent,
-        ToastComponent
+        ToastComponent,
+        UploadImagePopupComponent
     ],
     imports: [
         BrowserModule,

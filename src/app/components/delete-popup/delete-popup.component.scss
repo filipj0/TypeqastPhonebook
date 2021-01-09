@@ -9,7 +9,7 @@ $headerBorder: #DCDCDC;
 
     .header {
       font-size: $fontSmall;
-      color: $greyPrime;
+      color: $colorGreyPrime;
       border-bottom: 1px solid $headerBorder;
       height: 60px;
       line-height: 60px;
@@ -18,23 +18,22 @@ $headerBorder: #DCDCDC;
     .body {
       .question {
         font-size: $fontSmall;
-        color: $greyPrime;
+        color: $colorGreyPrime;
         width: 100%;
         text-align: center;
-        margin-top: 30px;
       }
 
       .name {
         font-size: $fontRegular;
-        color: $tealPrime;
+        color: $colorTealPrime;
         width: 100%;
         text-align: center;
-        margin-top: 30px;
+        margin-top: 5%;
       }
 
       .buttons {
         position: absolute;
-        bottom: 60px;
+        bottom: 0;
         left: 0;
         right: 0;
 
@@ -46,6 +45,49 @@ $headerBorder: #DCDCDC;
         .submit-btn {
           position: absolute;
           right: 30px;
+        }
+      }
+    }
+  }
+
+  &.mobile {
+    .popup {
+      height: 50%;
+      width: 84%;
+      min-width: 185px;
+      min-height: 300px;
+
+      .header {
+        font-size: $fontMobileRegular;
+        height: 9vh;
+        line-height: 9vh;
+      }
+
+      .body {
+        top: 16vh;
+
+        .question {
+          font-size: $fontMobileRegular;
+        }
+
+        .name {
+          font-size: $fontMobileLarge;
+        }
+
+        .buttons {
+          button {
+            left: 0;
+            right: 0;
+            margin: auto;
+
+            &.cancel-btn {
+              bottom: 4.5vh;
+            }
+
+            &.submit-btn {
+              bottom: 13.5vh;
+            }
+          }
         }
       }
     }

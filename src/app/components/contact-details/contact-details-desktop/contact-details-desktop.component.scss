@@ -48,11 +48,11 @@ $imageUploadBg: rgba(45, 161, 173, 0.4);
         position: relative;
         height: 94px;
         width: 100%;
-        border-bottom: 1px solid $tealPrime;
+        border-bottom: 1px solid $colorTealPrime;
 
         .delete-option {
           position: relative;
-          color: $greyPrime;
+          color: $colorGreyPrime;
           font-size: $fontSmall;
           height: 94px;
           line-height: 94px;
@@ -61,7 +61,7 @@ $imageUploadBg: rgba(45, 161, 173, 0.4);
           cursor: pointer;
 
           &:hover {
-            color: $tealPrime;
+            color: $colorTealPrime;
           }
         }
 
@@ -91,7 +91,7 @@ $imageUploadBg: rgba(45, 161, 173, 0.4);
           right: 85px;
           height: 100%;
           line-height: 94px;
-          color: $greyPrime;
+          color: $colorGreyPrime;
           font-size: $fontLarge;
         }
       }
@@ -110,7 +110,7 @@ $imageUploadBg: rgba(45, 161, 173, 0.4);
             font-size: $fontSmall;
 
             &.contact-data {
-              color: $greyPrime;
+              color: $colorGreyPrime;
 
               &.phone-data {
                 div {
@@ -144,7 +144,7 @@ $imageUploadBg: rgba(45, 161, 173, 0.4);
             position: relative;
             height: 150px;
             width: 100%;
-            border-bottom: 1px solid $tealPrime;
+            border-bottom: 1px solid $colorTealPrime;
 
             &.phone-inputs {
               border: none;
@@ -170,7 +170,7 @@ $imageUploadBg: rgba(45, 161, 173, 0.4);
                   height: 30px;
                   width: 30px;
                   opacity: 0.5;
-                  border: 1px solid $greyPrime;
+                  border: 1px solid $colorGreyPrime;
                   border-radius: 50%;
                   cursor: pointer;
                   float: left;
@@ -193,7 +193,7 @@ $imageUploadBg: rgba(45, 161, 173, 0.4);
                   position: relative;
                   height: 32px;
                   width: 32px;
-                  border: 1px solid $tealPrime;
+                  border: 1px solid $colorTealPrime;
                   border-radius: 50%;
                   float: left;
                   margin-right: 15px;
@@ -207,7 +207,7 @@ $imageUploadBg: rgba(45, 161, 173, 0.4);
 
                 .text {
                   font-size: $fontSmall;
-                  color: $tealPrime;
+                  color: $colorTealPrime;
                   line-height: 32px;
                   float: left;
                 }
@@ -250,47 +250,9 @@ $imageUploadBg: rgba(45, 161, 173, 0.4);
   }
 }
 
-#imageUrlInputWrapper {
-  .popup {
-    height: 150px;
-    width: 600px;
-
-    label {
-      font-size: $fontRegular;
-      color: $tealPrime;
-    }
-
-    #imageUrlInput {
-      height: 60px;
-      width: 600px;
-      margin-top: 15px;
-
-      input {
-        width: 100%;
-        height: 100%;
-      }
-
-      .error {
-        font-size: $fontSmall;
-        color: red;
-      }
-    }
-
-    .buttons {
-      height: auto;
-      width: 100%;
-      margin-top: 25px;
-    }
-
-    .submit-btn {
-      float: right;
-    }
-  }
-}
-
 .label-with-icon {
   position: absolute;
-  color: $tealPrime;
+  color: $colorTealPrime;
 
   img {
     width: 15px;

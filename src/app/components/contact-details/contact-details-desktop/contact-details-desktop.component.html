@@ -126,20 +126,8 @@
     </div>
 </div>
 
-<div *ngIf="showImageUrlInput" id="imageUrlInputWrapper" class="popupWrapper">
-    <div class="overlay abs-center"></div>
-    <div class="popup abs-center">
-        <label for="imageUrlInput">Image URL: </label>
-        <div id="imageUrlInput">
-            <input [ngModel]="imageUrlInput" (ngModelChange)="imageUrlInput = $event" autofocus>
-            <div *ngIf="showImageUrlInputError" class="error">Image URL is required</div>
-        </div>
-        <div class="buttons">
-            <button class="cancel-btn" (click)="toggleImageUrlInputPopup(false)">Cancel</button>
-            <button class="submit-btn" (click)="saveImageUrl()">Upload image</button>
-        </div>
-    </div>
-</div>
+<app-upload-image-popup *ngIf="showImageUrlInput" [imageUrlInput]="imageUrl" (closeEmitter)="showImageUrlInput = false"
+                        (saveEmitter)="imageUrl = $event"></app-upload-image-popup>
 
 <app-delete-popup *ngIf="showDeletePrompt" [contact]="contact"
                   (closeEmitter)="showDeletePrompt = false"></app-delete-popup>

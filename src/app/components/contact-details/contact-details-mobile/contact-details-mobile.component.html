@@ -1,1 +1,147 @@
-<p>contact-details-mobile works!</p>
+<div id="contactDetailsArea" class="abs-center">
+    <div class="header abs-center-horizontal">
+        <div class="header-inner abs-center">
+            <div class="header-icon back-btn height-based" [innerHTML]="svgService.getSvg(svgService.svgKeys.BACK_ICON)"
+                 (click)="location.back()"></div>
+            <ng-container *ngIf="detailsService.detailsMode === detailsService.detailsModes.READONLY">
+                <div class="header-icon height-based" [innerHTML]="svgService.getSvg(svgService.svgKeys.EDIT_ICON)"
+                     (click)="enterEditMode()"></div>
+                <div *ngIf="!contact?.favorite" class="header-icon fav-icon height-based"
+                     [innerHTML]="svgService.getSvg(svgService.svgKeys.FAV_ICON)"
+                     (click)="toggleFavorite(contact.id)"></div>
+                <div *ngIf="contact?.favorite" class="header-icon fav-icon height-based"
+                     [innerHTML]="svgService.getSvg(svgService.svgKeys.FAV_FULL_ICON)"
+                     (click)="toggleFavorite(contact.id)"></div>
+            </ng-container>
+            <ng-container *ngIf="detailsService.detailsMode === detailsService.detailsModes.EDIT">
+                <!--<div class="delete-option" (click)="showDeletePrompt = true">-->
+                    <div class="header-icon height-based"
+                         [innerHTML]="svgService.getSvg(svgService.svgKeys.DELETE_ICON)" (click)="showDeletePrompt = true"></div>
+                <!--</div>-->
+            </ng-container>
+        </div>
+    </div>
+    <div class="inner abs-center-horizontal">
+        <div id="contactDetails" class="abs-center-horizontal">
+            <div class="profile abs-center-horizontal" [ngClass]="{'upload-enabled': imageUploadEnabled}">
+                <div class="profile-pic-wrapper abs-center-vertical" [ngClass]="{'upload-enabled': imageUploadEnabled}"
+                     (click)="imageUploadEnabled ? toggleImageUrlInputPopup(true) : null">
+                    <img *ngIf="imageUrl" imgLoad [imageUrl]="imageUrl">
+                    <img *ngIf="imageUploadEnabled" class="abs-center image-upload-icon"
+                         [ngClass]="{'image-exists': imageUrl != null}" src="./assets/images/upload_icon.png">
+                </div>
+                <div *ngIf="detailsService.detailsMode === detailsService.detailsModes.READONLY"
+                     class="profile-name text-overflow-ellipsis abs-center-vertical">{{contact.fullName}}</div>
+            </div>
+            <div *ngIf="detailsService.detailsMode === detailsService.detailsModes.READONLY"
+                 class="contact-data-grid abs-center-horizontal">
+                <div class="contact-data-grid-row">
+                    <div class="icon">
+                        <img src="./assets/images/mail_icon.png">
+                    </div>
+                    <div class="data">
+                        <label>email</label>
+                        <span>{{contact.email}}</span>
+                    </div>
+                </div>
+                <div class="contact-data-grid-row">
+                    <div class="icon">
+                        <img src="./assets/images/phone_icon.png">
+                    </div>
+                    <div class="data">
+                        <label>numbers</label>
+                        <div class="phone-numbers-grid">
+                            <div *ngFor="let phoneNumber of contact.phoneNumbers" class="phone-numbers-grid-row">
+                                <div class="type text-overflow-ellipsis">{{phoneNumber.type}}</div>
+                                <div class="number">{{phoneNumber.number}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="contact-form" *ngIf="detailsService.detailsMode !== detailsService.detailsModes.READONLY">
+                <form [formGroup]="form" (ngSubmit)="saveChanges(form)">
+                    <div class="form-control">
+                        <div class="form-control-grid">
+                            <div class="form-control-grid-row label">
+                                <img class="icon" src="./assets/images/profile_icon.png">
+                                <label>full name</label>
+                            </div>
+                            <div class="form-control-grid-row input">
+                                <input type="text" formControlName="fullName" placeholder="Full name"
+                                       [ngClass]="{'invalid': showFormValidationErrors && fullNameControl.invalid}">
+                                <div *ngIf="showFormValidationErrors && fullNameControl.invalid" class="form-error">
+                                    Name is required.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-control">
+                        <div class="form-control-grid">
+                            <div class="form-control-grid-row label">
+                                <img class="icon" src="./assets/images/mail_icon.png">
+                                <label>email</label>
+                            </div>
+                            <div class="form-control-grid-row input">
+                                <input type="text" formControlName="email" placeholder="Email"
+                                       [ngClass]="{'invalid': showFormValidationErrors && emailControl.invalid}">
+                                <div *ngIf="showFormValidationErrors && emailControl.invalid" class="form-error">
+                                    {{emailControl.errors.required ? 'Email address is required' : emailControl.errors.invalidFormat}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-control phone-inputs" formArrayName="phoneNumbers">
+                        <div class="form-control-grid phone-inputs">
+                            <div class="form-control-grid-row label">
+                                <img class="icon" src="./assets/images/phone_icon.png">
+                                <label>numbers</label>
+                            </div>
+                            <div class="form-control-grid-row">
+                                <div class="phone-input-grid"
+                                     *ngFor="let phoneNumberControl of phoneNumbersArrayControl, let i = index">
+                                    <input class="phone-input-grid-row" type="text" placeholder="Number"
+                                           [formControl]="phoneNumberControl.controls.number"
+                                           value="{{phoneNumberControl.controls.number.value}}"
+                                           [ngClass]="{'invalid': showFormValidationErrors && phoneNumberControl.controls.number.invalid}">
+                                    <div class="phone-input-grid-row second-row">
+                                        <input type="text" class="phone-type"
+                                               placeholder="type"
+                                               [formControl]="phoneNumberControl.controls.type"
+                                               value="{{phoneNumberControl.controls.type.value}}"
+                                               [ngClass]="{'invalid': showFormValidationErrors && phoneNumberControl.controls.type.invalid}">
+                                        <div class="phone-delete abs-center-vertical"
+                                             [innerHTML]="svgService.getSvg(svgService.svgKeys.PLUS_ICON)"
+                                             (click)="removePhoneNumber(i)"></div>
+                                    </div>
+                                    <div *ngIf="showFormValidationErrors && (phoneNumberControl.controls.number.invalid || phoneNumberControl.controls.type.invalid)"
+                                         class="phone-input-grid-row form-error">
+                                        {{phoneNumberControl.controls.number.invalid ? (phoneNumberControl.controls.number.errors.required ? 'Phone number is required' : phoneNumberControl.controls.number.errors.invalidFormat) : 'Phone type is required'}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-control-grid-row">
+                                <div class="phone-add">
+                                    <div class="icon" (click)="addPhoneNumber()">
+                                        <img class="abs-center" src="./assets/images/add_icon.png">
+                                    </div>
+                                    <div class="text">Add number</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-buttons">
+                        <button class="cancel-btn" type="button" (click)="cancelChanges()">Cancel</button>
+                        <button class="submit-btn" type="submit">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-upload-image-popup *ngIf="showImageUrlInput" [imageUrlInput]="imageUrl" (closeEmitter)="showImageUrlInput = false"
+                        (saveEmitter)="imageUrl = $event"></app-upload-image-popup>
+
+<app-delete-popup *ngIf="showDeletePrompt" [contact]="contact"
+                  (closeEmitter)="showDeletePrompt = false"></app-delete-popup>

@@ -15,17 +15,17 @@
         </div>
         <div *ngFor="let contact of contactsDisplayed" class="tile"
              (click)="detailsService.openDetails(contact.id, detailsService.detailsModes.READONLY)">
-            <div class="tile-header">
-                <div class="tile-header-icon fav-icon" (click)="toggleFavorite(contact.id)" stop-click-propagation>
+            <div class="tile-actions">
+                <div class="tile-action-icon fav-icon" (click)="toggleFavorite(contact.id)" stop-click-propagation>
                     <div *ngIf="!contact.favorite" class="off"
                          [innerHTML]="svgService.getSvg(svgService.svgKeys.FAV_ICON)"></div>
                     <div *ngIf="contact.favorite" class="on"
                          [innerHTML]="svgService.getSvg(svgService.svgKeys.FAV_FULL_ICON)"></div>
                 </div>
-                <div class="tile-header-icon delete-icon"
+                <div class="tile-action-icon delete-icon"
                      [innerHTML]="svgService.getSvg(svgService.svgKeys.DELETE_ICON)"
                      (click)="deleteContactPrompt(contact)" stop-click-propagation></div>
-                <div class="tile-header-icon edit-icon"
+                <div class="tile-action-icon edit-icon"
                      [innerHTML]="svgService.getSvg(svgService.svgKeys.EDIT_ICON)"
                      (click)="detailsService.openDetails(contact.id, detailsService.detailsModes.EDIT)"
                      stop-click-propagation></div>

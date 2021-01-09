@@ -1,16 +1,28 @@
 // Colors:
-$tealPrime: #2DA1AD;
-$greyPrime: #BBC4C3;
-$greyLight: #EAEAEA;
-$greyShadow: #E3E3E3;
-$tileImageBackground: rgba(187, 196, 195, 0.3);
+$colorTealPrime: #2DA1AD;
+$colorGreyPrime: #BBC4C3;
+$colorGreySecondary: #ADB8B6;
+$colorGreyLight: #EAEAEA;
+$colorGreyShadow: #E3E3E3;
+$colorBgTileImage: rgba(187, 196, 195, 0.3);
+$colorBgImageUpload: rgba(45, 161, 173, 0.4);
+
+// Gradient colors
+$gradientBgSubmitBtn: linear-gradient(182.65deg, #78C9CE 0%, #2496A2 99.98%, #2496A2 100%);
+
+// Shadow
+$shadowBtn: 0 2px 14px 0 rgba(99,109,255,0.27);
 
 // Font-sizes:
 $fontSmall: 16px;
 $fontRegular: 18px;
 $fontLarge: 28px;
-$fontMobileRegular: 14px;
+
+$fontMobileSmall: 2vh;
+$fontMobileRegular: 2.4vh;
+$fontMobileLarge: 2.7vh;
+$fontMobileExtraLarge: 3.1vh;
 
 // Borders
-$tileBorderPrime: 1px solid rgba(187, 196, 195, 0.4);
-$tileImageBorder: 3px solid rgba(187, 196, 195, 0.3);
+$borderTilePrime: 1px solid rgba(187, 196, 195, 0.4);
+$borderTileImage: 3px solid rgba(187, 196, 195, 0.3);

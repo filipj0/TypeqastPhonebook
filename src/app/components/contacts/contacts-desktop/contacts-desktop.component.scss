@@ -16,8 +16,8 @@
       input {
         height: 100%;
         width: 100%;
-        border: 1px solid $greyLight;
-        box-shadow: 0 2px 34px 0 $greyShadow;
+        border: 1px solid $colorGreyLight;
+        box-shadow: 0 2px 34px 0 $colorGreyShadow;
         padding-left: 65px;
       }
 
@@ -42,7 +42,7 @@
       position: relative;
       width: 270px;
       height: 150px;
-      border: $tileBorderPrime;
+      border: $borderTilePrime;
       border-radius: 4px;
       cursor: pointer;
       float: left;
@@ -50,12 +50,12 @@
       margin-bottom: 30px;
 
       &:hover {
-        border-color: $tealPrime;
+        border-color: $colorTealPrime;
         border-style: solid !important;
       }
 
       &#newContact {
-        border-color: $tealPrime;
+        border-color: $colorTealPrime;
         border-style: dashed;
 
         .inner {
@@ -66,7 +66,7 @@
             font-family: 'Lato Regular', sans-serif;
             font-size: $fontSmall;
             text-align: center;
-            color: $tealPrime;
+            color: $colorTealPrime;
             opacity: 0.5;
             bottom: 0;
             width: 100%;
@@ -80,13 +80,13 @@
         }
       }
 
-      .tile-header {
+      .tile-actions {
         position: absolute;
         top: 0;
         left: 17px;
         right: 17px;
 
-        .tile-header-icon {
+        .tile-action-icon {
           position: relative;
           margin-top: 15px;
           height: 15px;
@@ -118,7 +118,7 @@
         bottom: 0;
         width: 100%;
         text-align: center;
-        color: $greyPrime;
+        color: $colorGreyPrime;
         font-size: $fontRegular;
         max-width: 90%;
       }

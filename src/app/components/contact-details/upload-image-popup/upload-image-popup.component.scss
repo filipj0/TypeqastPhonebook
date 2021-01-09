@@ -1,0 +1,65 @@
+@import "src/theme.scss";
+
+#imageUrlInputWrapper {
+  .popup {
+    label {
+      font-size: $fontRegular;
+      color: $colorTealPrime;
+    }
+
+    #imageUrlInput {
+      input {
+        width: 100%;
+        height: 100%;
+      }
+
+      .error {
+        color: red;
+      }
+    }
+
+    .buttons {
+      height: auto;
+      width: 100%;
+      margin-top: 25px;
+    }
+
+    .submit-btn {
+      float: right;
+    }
+  }
+
+  &.mobile {
+    .popup {
+      height: 37%;
+      width: 84%;
+      min-width: 185px;
+      min-height: 255px;
+
+      #imageUrlInput {
+        height: 7.5vh;
+        width: 90%;
+        margin-top: 3vh;
+
+        .error {
+          font-size: $fontMobileSmall;
+        }
+      }
+
+      .buttons {
+        width: 100%;
+        bottom: 0;
+        margin: 0;
+
+        button {
+          position: relative;
+          left: 50%;
+          transform: translateX(-50%);
+          float: left;
+          display: block;
+          margin-bottom: 5%;
+        }
+      }
+    }
+  }
+}

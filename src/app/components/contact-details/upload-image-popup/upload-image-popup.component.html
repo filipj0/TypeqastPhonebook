@@ -1,0 +1,14 @@
+<div id="imageUrlInputWrapper" class="popup-wrapper" [ngClass]="{'mobile': isMobileDevice}">
+    <div class="overlay abs-center"></div>
+    <div class="popup abs-center">
+        <label for="imageUrlInput">Image URL: </label>
+        <div id="imageUrlInput">
+            <input [ngModel]="imageUrlInput" (ngModelChange)="imageUrlInput = $event" autofocus>
+            <div *ngIf="showError" class="error">Image URL is required</div>
+        </div>
+        <div class="buttons abs-center-horizontal">
+            <button class="cancel-btn" (click)="closeEmitter.emit()">Cancel</button>
+            <button class="submit-btn" (click)="saveImageUrl()">Upload image</button>
+        </div>
+    </div>
+</div>

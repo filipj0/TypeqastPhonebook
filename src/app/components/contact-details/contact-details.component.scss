@@ -1,0 +1,32 @@
+@import "src/theme.scss";
+
+.profile-pic-wrapper {
+  &.upload-enabled {
+    background-color: $colorBgImageUpload;
+    cursor: pointer;
+  }
+
+  &:hover .image-upload-icon {
+    visibility: visible !important;
+  }
+
+  .image-upload-icon {
+    height: 20px;
+    width: auto;
+    z-index: 1;
+
+    &.image-exists {
+      visibility: hidden;
+    }
+  }
+}
+
+.label-with-icon {
+  position: absolute;
+  color: $colorTealPrime;
+}
+
+.form-error {
+  color: red;
+  font-family: 'Lato Regular', sans-serif;
+}

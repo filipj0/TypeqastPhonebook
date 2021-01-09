@@ -15,7 +15,7 @@
   width: 100%;
   height: 100%;
   margin: 0;
-  overflow: auto;
+  overflow: hidden;
   font-family: 'Lato Bold', sans-serif;
   user-select: none;
 }
@@ -44,7 +44,7 @@
   bottom: 0;
 }
 
-.text-overflow-ellipsis{
+.text-overflow-ellipsis {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -53,10 +53,10 @@
 // Global specific classes
 .profile-pic-wrapper {
   position: absolute;
-  border: $tileImageBorder;
+  border: $borderTileImage;
   border-radius: 50%;
   overflow: hidden;
-  background-color: $tileImageBackground;
+  background-color: $colorBgTileImage;
 
   img:not(.image-upload-icon) {
     position: absolute;
@@ -82,7 +82,7 @@
   }
 }
 
-.popupWrapper {
+.popup-wrapper {
   position: fixed;
   top: 0;
   bottom: 0;
@@ -100,6 +100,7 @@
     background-color: white;
     padding: 20px 30px 30px 30px;
     box-shadow: 0 0 14px 0 rgba(99, 109, 255, 0.27);
+    box-sizing: border-box;
   }
 }
 
@@ -107,15 +108,15 @@
 input {
   border-radius: 4px;
   box-sizing: border-box;
-  border: 1px solid $greyPrime;
+  border: 1px solid $colorGreyPrime;
   background-color: white;
   padding: 0 30px 0 30px;
   font-size: $fontRegular;
-  color: $greyPrime;
+  color: $colorGreyPrime;
   outline: none;
 
   &:focus {
-    border-color: $tealPrime;
+    border-color: $colorTealPrime;
   }
 
   &.invalid {
@@ -124,7 +125,7 @@ input {
 
   &::placeholder {
     font-size: $fontSmall;
-    color: $greyPrime;
+    color: $colorGreyPrime;
     opacity: .4;
   }
 }
@@ -132,20 +133,26 @@ input {
 button {
   height: 42px;
   width: 160px;
-  border-radius: 28.5px;
+  border-radius: 100px;
   border: none;
   outline: none;
   cursor: pointer;
   user-select: none;
   color: white;
+  box-shadow: $shadowBtn;
 
   &.cancel-btn {
-    background-color: $greyPrime;
+    background: $colorGreyPrime;
   }
 
   &.submit-btn {
-    background-color: $tealPrime;
+    background: $gradientBgSubmitBtn;
   }
+}
+
+.mobile button {
+  height: 6.3vh;
+  width: 42.7vw;
 }
 
 // SVG rules
@@ -156,36 +163,44 @@ svg {
   bottom: 0;
   left: 0;
   right: 0;
-  width: 100%;
+}
+
+.height-based svg {
+  width: auto;
   height: 100%;
 }
 
-.tile-header-icon svg, .header-icon svg {
-  fill: $greyPrime;
+.width-based {
+  width: 100%;
+  height: auto;
+}
+
+.tile-action-icon svg, .header-icon svg {
+  fill: $colorGreyPrime;
   cursor: pointer;
 
   &:hover {
-    fill: $tealPrime;
+    fill: $colorTealPrime;
   }
 }
 
 .header .delete-option:hover svg {
-  fill: $tealPrime;
+  fill: $colorTealPrime;
 }
 
 .phone-delete {
   &:hover {
-    border-color: $tealPrime;
+    border-color: $colorTealPrime;
 
     svg {
-      fill: $tealPrime;
+      fill: $colorTealPrime;
     }
   }
 
   svg {
     width: 50%;
     height: auto;
-    fill: $greyPrime;
+    fill: $colorGreyPrime;
     transform: rotate(45deg);
   }
 }

@@ -146,16 +146,6 @@ export class ContactDetailsComponent implements OnInit {
         this.detectChanges();
     }
 
-    saveImageUrl() {
-        if (this.imageUrlInput === '' || this.imageUrlInput == null) {
-            this.showImageUrlInputError = true;
-            this.detectChanges();
-            return false;
-        }
-        this.imageUrl = this.imageUrlInput;
-        this.toggleImageUrlInputPopup(false);
-    }
-
     toggleFavorite(contactId: number) {
         this.api.toggleFavorite(contactId).subscribe((favorite: boolean) => {
             this.contact.favorite = favorite;

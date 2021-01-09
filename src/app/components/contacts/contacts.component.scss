@@ -1,0 +1,85 @@
+@import "src/theme.scss";
+
+#contactListArea {
+  position: absolute;
+  width: 100%;
+
+  #searchBar {
+    .inner {
+      height: 100%;
+      width: 100%;
+
+      input {
+        height: 100%;
+        width: 100%;
+        border: 1px solid $colorGreyLight;
+        box-shadow: 0 2px 34px 0 $colorGreyShadow;
+        padding-left: 18%;
+      }
+
+      img {
+        z-index: 1;
+        height: 36%;
+        width: auto;
+        left: 7%;
+      }
+    }
+  }
+
+  #contactList {
+    position: absolute;
+
+    &.search-bar-hidden {
+      top: 0;
+    }
+
+    .tile {
+      position: relative;
+      border: $borderTilePrime;
+      border-radius: 4px;
+      cursor: pointer;
+      float: left;
+
+      &:hover {
+        border-color: $colorTealPrime;
+        border-style: solid !important;
+      }
+
+      &#newContact {
+        border-color: $colorTealPrime;
+        border-style: dashed;
+
+        .inner {
+          img {
+            height: 18px;
+            width: 18px;
+            top: 0;
+          }
+
+          .text {
+            font-family: 'Lato Regular', sans-serif;
+            color: $colorTealPrime;
+            opacity: 0.5;
+          }
+        }
+      }
+
+      .tile-actions {
+
+        .tile-action-icon {
+          position: relative;
+          height: 100%;
+          width: auto;
+          float: right;
+        }
+      }
+    }
+
+    .profile {
+      .profile-name {
+        color: $colorGreyPrime;
+      }
+    }
+  }
+}
+
