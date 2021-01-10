@@ -43,16 +43,6 @@
           margin-right: 12%;
         }
       }
-
-      .header-name {
-        position: absolute;
-        left: 45px;
-        right: 85px;
-        height: 100%;
-        line-height: 94px;
-        color: $colorGreyPrime;
-        font-size: $fontLarge;
-      }
     }
   }
 
@@ -96,7 +86,7 @@
       .contact-data-grid {
         top: 20vh;
         width: 85%;
-        display: inline-grid;
+        display: grid;
 
         .contact-data-grid-row {
           display: inline-grid;

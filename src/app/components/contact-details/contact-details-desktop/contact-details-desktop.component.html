@@ -29,32 +29,23 @@
                     </div>
                 </ng-container>
             </div>
-            <table class="abs-center-horizontal content-data-table"
-                   *ngIf="detailsService.detailsMode === detailsService.detailsModes.READONLY">
-                <tr>
-                    <td>
-                        <div class="label-with-icon">
-                            <img class="icon" src="./assets/images/mail_icon.png">
-                            <label>email</label>
+            <div *ngIf="detailsService.detailsMode === detailsService.detailsModes.READONLY" class="contact-data-grid abs-center-horizontal">
+                <div class="contact-data-grid-row">
+                    <img class="icon" src="./assets/images/mail_icon.png">
+                    <div class="label">email</div>
+                    <div class="data">{{contact.email}}</div>
+                </div>
+                <div class="contact-data-grid-row">
+                    <img class="icon" src="./assets/images/phone_icon.png">
+                    <div class="label">numbers</div>
+                    <div class="data phone-data-grid">
+                        <div *ngFor="let phoneNumber of contact.phoneNumbers" class="phone-data-grid-row">
+                            <div class="type text-overflow-ellipsis">{{phoneNumber.type}}</div>
+                            <div class="number">{{phoneNumber.number}}</div>
                         </div>
-                    </td>
-                    <td class="contact-data text-overflow-ellipsis">{{contact.email}}</td>
-                </tr>
-                <tr>
-                    <td class="label-with-icon">
-                        <img class="icon" src="./assets/images/phone_icon.png">
-                        <label>numbers</label>
-                    </td>
-                    <td class="contact-data phone-data">
-                        <table>
-                            <tr *ngFor="let phoneNumber of contact.phoneNumbers">
-                                <td>{{phoneNumber.type}}</td>
-                                <td>{{phoneNumber.number}}</td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-            </table>
+                    </div>
+                </div>
+            </div>
             <div class="contact-form" *ngIf="detailsService.detailsMode !== detailsService.detailsModes.READONLY">
                 <form [formGroup]="form" (ngSubmit)="saveChanges(form)">
                     <div class="form-control">

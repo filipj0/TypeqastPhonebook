@@ -12,10 +12,17 @@
     background: linear-gradient(182.65deg, #78C9CE 0%, #2496A2 99.98%, #2496A2 100%);
   }
 
+  .logo {
+    height: 33%;
+    width: 100%;
+  }
+
   img {
-    position: absolute;
-    height: 20px;
-    width: 180px;
+    position: relative;
+    height: 100%;
+    width: auto;
+    left: 50%;
+    transform: translateX(-50%);
   }
 
   .bottom-rect {
@@ -50,27 +57,26 @@
     height: 120px;
     width: 87.5%;
     border-bottom: $colorTealPrime solid 1px;
-    text-align: center;
-    display: table;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
     a {
       color: $colorGreyPrime;
       font-size: $fontRegular;
       text-decoration: none;
       cursor: pointer;
-      display: table-cell;
-      vertical-align: middle;
 
       &.active {
         color: $colorTealPrime;
       }
 
       &.contacts-link {
-        margin-right: 30px;
+        margin-right: 2.4%;
       }
 
       &.favorites-link {
-        margin-left: 30px;
+        margin-left: 2.4%;
       }
     }
 
@@ -85,19 +91,6 @@
 .mobile {
   #appHeader {
     height: 7.5%;
-
-    .logo{
-      height: 33%;
-      width: 100%;
-    }
-
-    img {
-      position: relative;
-      height: 100%;
-      width: auto;
-      left: 50%;
-      transform: translateX(-50%);
-    }
   }
 
   #appBody {

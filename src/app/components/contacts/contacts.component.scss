@@ -50,12 +50,6 @@
         border-style: dashed;
 
         .inner {
-          img {
-            height: 18px;
-            width: 18px;
-            top: 0;
-          }
-
           .text {
             font-family: 'Lato Regular', sans-serif;
             color: $colorTealPrime;
@@ -65,7 +59,6 @@
       }
 
       .tile-actions {
-
         .tile-action-icon {
           position: relative;
           height: 100%;

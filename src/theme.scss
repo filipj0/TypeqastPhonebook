@@ -14,9 +14,13 @@ $gradientBgSubmitBtn: linear-gradient(182.65deg, #78C9CE 0%, #2496A2 99.98%, #24
 $shadowBtn: 0 2px 14px 0 rgba(99,109,255,0.27);
 
 // Font-sizes:
-$fontSmall: 16px;
+/*$fontSmall: 16px;
 $fontRegular: 18px;
-$fontLarge: 28px;
+$fontLarge: 28px;*/
+
+$fontSmall: min(max(14px, 0.9vw), 25px);
+$fontRegular: min(max(16px, 1vw), 30px);
+$fontLarge: min(max(25px, 1.5vw), 40px);
 
 $fontMobileSmall: 2vh;
 $fontMobileRegular: 2.4vh;

@@ -6,7 +6,7 @@
         </div>
     </div>
 
-    <div id="contactList" [ngClass]="{'search-bar-hidden': contacts.length === 0}">
+    <div id="contactList" [ngClass]="{'search-bar-hidden': contacts.length === 0}" class="abs-center-horizontal">
         <div id="newContact" class="tile" (click)="detailsService.openDetails(null, detailsService.detailsModes.NEW)">
             <div class="inner abs-center">
                 <img class="abs-center-horizontal" src="../assets/images/add_icon.png">
@@ -16,16 +16,16 @@
         <div *ngFor="let contact of contactsDisplayed" class="tile"
              (click)="detailsService.openDetails(contact.id, detailsService.detailsModes.READONLY)">
             <div class="tile-actions">
-                <div class="tile-action-icon fav-icon" (click)="toggleFavorite(contact.id)" stop-click-propagation>
+                <div class="tile-action-icon fav-icon height-based" (click)="toggleFavorite(contact.id)" stop-click-propagation>
                     <div *ngIf="!contact.favorite" class="off"
                          [innerHTML]="svgService.getSvg(svgService.svgKeys.FAV_ICON)"></div>
                     <div *ngIf="contact.favorite" class="on"
                          [innerHTML]="svgService.getSvg(svgService.svgKeys.FAV_FULL_ICON)"></div>
                 </div>
-                <div class="tile-action-icon delete-icon"
+                <div class="tile-action-icon delete-icon height-based"
                      [innerHTML]="svgService.getSvg(svgService.svgKeys.DELETE_ICON)"
                      (click)="deleteContactPrompt(contact)" stop-click-propagation></div>
-                <div class="tile-action-icon edit-icon"
+                <div class="tile-action-icon edit-icon height-based"
                      [innerHTML]="svgService.getSvg(svgService.svgKeys.EDIT_ICON)"
                      (click)="detailsService.openDetails(contact.id, detailsService.detailsModes.EDIT)"
                      stop-click-propagation></div>

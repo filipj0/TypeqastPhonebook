@@ -4,8 +4,10 @@ $headerBorder: #DCDCDC;
 
 #deleteContactPopup {
   .popup {
-    height: 240px;
-    width: 480px;
+    width: 34vw;
+    height: 17vw;
+    min-height: 240px;
+    min-width: 480px;
 
     .header {
       font-size: $fontSmall;
@@ -16,11 +18,14 @@ $headerBorder: #DCDCDC;
     }
 
     .body {
+      height: 50%;
+
       .question {
         font-size: $fontSmall;
         color: $colorGreyPrime;
         width: 100%;
         text-align: center;
+        margin-top: 5%;
       }
 
       .name {
@@ -65,9 +70,11 @@ $headerBorder: #DCDCDC;
 
       .body {
         top: 16vh;
+        height: auto;
 
         .question {
           font-size: $fontMobileRegular;
+          margin-top: 0;
         }
 
         .name {

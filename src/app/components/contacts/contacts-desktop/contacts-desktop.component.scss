@@ -1,4 +1,4 @@
-@import "src/theme.scss";
+@import "../contacts.component.scss";
 
 #contactListArea {
   position: absolute;
@@ -10,44 +10,35 @@
     width: 100%;
 
     .inner {
-      height: 60px;
-      width: 540px;
+      height: 30%;
+      width: 37.5%;
+      min-width: 400px;
 
       input {
-        height: 100%;
-        width: 100%;
-        border: 1px solid $colorGreyLight;
-        box-shadow: 0 2px 34px 0 $colorGreyShadow;
-        padding-left: 65px;
+        padding-left: 12%;
       }
 
       img {
-        z-index: 1;
-        height: 18px;
-        width: 17px;
-        left: 23px;
+        left: 4%
       }
     }
   }
 
   #contactList {
-    position: absolute;
-    left: 137px;
+    display: flex;
+    flex-wrap: wrap;
+    width: 81.85%;
 
-    &.search-bar-hidden{
+    &.search-bar-hidden {
       top: 50px;
     }
 
     .tile {
-      position: relative;
-      width: 270px;
-      height: 150px;
-      border: $borderTilePrime;
-      border-radius: 4px;
-      cursor: pointer;
-      float: left;
-      margin-right: 30px;
-      margin-bottom: 30px;
+      width: 18.75vw;
+      height: 10.4vw;
+      min-width: 270px;
+      min-height: 150px;
+      margin: 0 max(10px, 0.5vw) max(20px, 1vw) max(10px, 0.5vw);
 
       &:hover {
         border-color: $colorTealPrime;
@@ -59,22 +50,20 @@
         border-style: dashed;
 
         .inner {
-          height: 50px;
-          width: 70px;
+          height: 33.33%;
+          width: 100%;
 
           .text {
-            font-family: 'Lato Regular', sans-serif;
             font-size: $fontSmall;
             text-align: center;
             color: $colorTealPrime;
-            opacity: 0.5;
             bottom: 0;
             width: 100%;
           }
 
           img {
-            height: 18px;
-            width: 18px;
+            height: 37.5%;
+            width: auto;
             top: 0;
           }
         }
@@ -82,15 +71,16 @@
 
       .tile-actions {
         position: absolute;
-        top: 0;
-        left: 17px;
-        right: 17px;
+        left: 6.3%;
+        right: 6.3%;
+        height: 11.3%;
+        top: 11.3%;
+        z-index: 1;
 
         .tile-action-icon {
           position: relative;
-          margin-top: 15px;
-          height: 15px;
-          width: 15px;
+          margin-right: 6.3%;
+          height: 100%;
           float: right;
 
           &.fav-icon {
@@ -98,22 +88,24 @@
           }
 
           &.edit-icon {
-            margin-right: 26px;
+            margin-right: 20%;
           }
         }
       }
     }
 
     .profile {
-      height: 100px;
+      height: 67%;
       width: 100%;
 
       .profile-pic-wrapper {
-        width: 66px;
-        height: 66px;
+        height: 4.5vw;
+        width: 4.5vw;
+        min-height: 66px;
+        min-width: 66px;
       }
 
-      .profile-name{
+      .profile-name {
         position: absolute;
         bottom: 0;
         width: 100%;
